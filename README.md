@@ -1,28 +1,43 @@
-# GUD Express Home + Application Website
+# GUD Express LLC — Owner-Operator Website
 
-A React + Vite website for GUD Express LLC — helping box truck owner-operators work under MC authority with dispatch, factoring support, and payment coordination.
+[![Build](https://github.com/dukens11-create/Gud-express-/actions/workflows/build.yml/badge.svg)](https://github.com/dukens11-create/Gud-express-/actions/workflows/build.yml)
+
+A professional React + Vite website for **GUD Express LLC** — helping box truck owner-operators
+work under MC authority with dispatch service, factoring support, and payment coordination.
+
+---
 
 ## Features
 
-- Professional homepage with company info
-- Box truck owner-operator program details (MC/DOT)
+- Professional homepage with company info, pricing, and service details
+- Box truck owner-operator program details (MC / DOT numbers)
 - Dispatch, factoring, and payment support sections
-- Online driver application form (front-end demo)
+- Online driver application form with loading state and success screen
 - Document upload checklist
-- Responsive mobile-friendly design
+- Mobile-responsive design with hamburger navigation
+- SEO-ready: Open Graph + Twitter Card meta tags
+- SVG favicon
+
+---
 
 ## Company Info
 
-GUD Express LLC  
-MC: 1528475  
-DOT: 4039907  
-Phone: (775) 389-1414  
-Email: gudexpress@gudxp.com
+| Field | Value |
+|-------|-------|
+| Company | GUD Express LLC |
+| MC | 1528475 |
+| DOT | 4039907 |
+| Phone | (775) 389-1414 |
+| Email | gudexpress@gudxp.com |
+
+---
 
 ## Requirements
 
 - [Node.js](https://nodejs.org/) 18 or newer
 - npm (comes with Node.js)
+
+---
 
 ## Run Locally
 
@@ -36,19 +51,23 @@ npm run dev
 
 Open your browser at **http://localhost:5173** (Vite's default port).
 
+---
+
 ## Build for Production
 
 ```bash
 npm run build
 ```
 
-The production-ready files will be output to the `dist/` folder.
+Production-ready files are output to the `dist/` folder.
 
-## Preview the Production Build Locally
+## Preview the Production Build
 
 ```bash
 npm run preview
 ```
+
+---
 
 ## Deploy
 
@@ -56,24 +75,63 @@ You can deploy the `dist/` folder to any static hosting service:
 
 | Platform | How to deploy |
 |---|---|
-| **GitHub Pages** | Push `dist/` contents to a `gh-pages` branch, or use the [gh-pages](https://www.npmjs.com/package/gh-pages) npm package |
 | **Netlify** | Drag and drop the `dist/` folder at [netlify.com/drop](https://app.netlify.com/drop), or connect your GitHub repo |
 | **Vercel** | Run `npx vercel` in the project root, or connect your GitHub repo at [vercel.com](https://vercel.com) |
-| **Cloudflare Pages** | Connect your GitHub repo at [pages.cloudflare.com](https://pages.cloudflare.com) and set build command to `npm run build` and output directory to `dist` |
+| **GitHub Pages** | Use the [gh-pages](https://www.npmjs.com/package/gh-pages) npm package or a GitHub Actions deploy workflow |
+| **Cloudflare Pages** | Connect your GitHub repo at [pages.cloudflare.com](https://pages.cloudflare.com) — build command: `npm run build`, output dir: `dist` |
+
+---
 
 ## Project Structure
 
 ```
 Gud-express-/
-├── index.html          # HTML entry point
-├── vite.config.js      # Vite + React plugin configuration
-├── package.json        # Project dependencies and scripts
-├── src/
-│   ├── main.jsx        # React app entry point (all components)
-│   ├── styles.css      # Global CSS styles
-│   └── assets/         # Images (logo, truck, team)
+├── public/
+│   └── favicon.svg         # Browser tab icon — replace with your own
+├── index.html              # HTML entry point (SEO meta tags live here)
+├── vite.config.js          # Vite + React plugin configuration
+├── package.json            # Project dependencies and scripts
+├── .github/
+│   └── workflows/
+│       └── build.yml       # CI: runs npm build on every push/PR
+└── src/
+    ├── main.jsx            # React app — all page sections in one file
+    ├── styles.css          # Global CSS styles
+    └── assets/
+        ├── gud-logo.png    # BRANDING: Replace with your actual logo
+        ├── truck.png       # IMAGES:   Replace with a real truck photo
+        └── team.png        # IMAGES:   Replace with a real team/ops photo
 ```
 
-## Important Note
+---
 
-The application form is **front-end only** (demo). To receive real driver applications, connect the form to a backend service such as [Formspree](https://formspree.io), [Supabase](https://supabase.com), [Firebase](https://firebase.google.com), [Airtable](https://airtable.com), or your own API.
+## Customization Guide
+
+| What to change | Where |
+|---|---|
+| Company name, MC, DOT, phone, email | `src/main.jsx` → `COMPANY` constant |
+| Services offered | `src/main.jsx` → `services` array |
+| Application requirements checklist | `src/main.jsx` → `requirements` array |
+| Logo image | Replace `src/assets/gud-logo.png` |
+| Hero truck photo | Replace `src/assets/truck.png` |
+| Team / operations photo | Replace `src/assets/team.png` |
+| Tab favicon | Replace `public/favicon.svg` |
+| SEO / Open Graph meta tags | `index.html` — update `og:url` and `og:image` |
+| Brand colors | `src/styles.css` — search for `#2563eb` (blue) and `#f59e0b` (amber) |
+
+---
+
+## Important Note — Form Backend
+
+The application form is **front-end only**. To receive real driver applications,
+connect the form to a backend service. See the `TODO` comment in the `Application`
+component in `src/main.jsx` for the exact integration point.
+
+Recommended options:
+
+| Service | Notes |
+|---|---|
+| [Formspree](https://formspree.io) | No backend needed — just swap the `fetch` URL |
+| [Supabase](https://supabase.com) | Full database, free tier available |
+| [Firebase](https://firebase.google.com) | Google cloud, good for real-time data |
+| [Airtable](https://airtable.com) | Spreadsheet-style database with an API |

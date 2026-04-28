@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+  <!-- Box truck silhouette representing GUD Express -->
+  <rect x="6" y="28" width="36" height="20" rx="2" fill="#fbbf24"/>
+  <rect x="42" y="34" width="16" height="14" rx="2" fill="#fbbf24"/>
+  <polygon points="42,34 58,34 52,28 42,28" fill="#f59e0b"/>
+  <circle cx="16" cy="50" r="5" fill="#1e3a8a"/>
+  <circle cx="16" cy="50" r="3" fill="#fbbf24"/>
+  <circle cx="48" cy="50" r="5" fill="#1e3a8a"/>
+  <circle cx="48" cy="50" r="3" fill="#fbbf24"/>
+  <!-- "G" lettermark -->
+  <text x="12" y="26" font-family="Arial,sans-serif" font-weight="bold" font-size="16" fill="white">GUD</text>
+</svg>
