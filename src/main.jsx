@@ -1,10 +1,13 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import {
-  Truck, ShieldCheck, ClipboardList, DollarSign, Phone, Mail,
+  ShieldCheck, ClipboardList, DollarSign, Phone, Mail,
   CheckCircle, UploadCloud, Send, FileText, ArrowRight
 } from 'lucide-react'
 import './styles.css'
+import gudLogo from './assets/gud-logo.png'
+import truckImg from './assets/truck.png'
+import teamImg from './assets/team.png'
 
 const COMPANY = {
   name: 'GUD Express LLC',
@@ -53,7 +56,7 @@ function Header() {
     <header className="header">
       <div className="container nav">
         <a href="#home" className="brand">
-          <img src="/src/assets/gud-logo.png" alt="GUD Express Logo" />
+          <img src={gudLogo} alt="GUD Express Logo" />
           <span>
             <strong>GUD Express</strong>
             <small>MC {COMPANY.mc} | DOT {COMPANY.dot}</small>
@@ -92,7 +95,7 @@ function Hero() {
         </div>
 
         <div className="heroImage">
-          <img src="/src/assets/truck.png" alt="GUD Express branded box truck" />
+          <img src={truckImg} alt="GUD Express branded box truck" />
           <div className="priceCard">
             <strong>10% – 15%</strong>
             <span>weekly revenue fee</span>
@@ -130,7 +133,7 @@ function TeamSection() {
   return (
     <section className="section team">
       <div className="container">
-        <img src="/src/assets/team.png" alt="GUD Express driver support team" />
+        <img src={teamImg} alt="GUD Express driver support team" />
         <div className="teamText">
           <p className="badge">All Qualified Drivers Welcome</p>
           <h2>One Team. One Mission. Helping Drivers Grow.</h2>
@@ -183,6 +186,11 @@ function Requirements() {
 }
 
 function Application() {
+  function handleSubmit(e) {
+    e.preventDefault()
+    alert('Demo application submitted. Connect this form to a backend to receive real applications.')
+  }
+
   return (
     <section id="apply" className="section dark">
       <div className="container appGrid">
@@ -199,7 +207,7 @@ function Application() {
           </div>
         </div>
 
-        <form className="form" onSubmit={(e)=>{e.preventDefault(); alert('Demo application submitted. Connect this form to a backend to receive real applications.')}}>
+        <form className="form" onSubmit={handleSubmit}>
           <div className="formRow">
             <label>Full Name<input required name="fullName" /></label>
             <label>Phone Number<input required name="phone" /></label>
