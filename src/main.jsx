@@ -27,6 +27,8 @@ import gudLogo from './assets/gud-logo.png'
 import truckImg from './assets/truck.png'
 import teamImg from './assets/team.png'
 
+const CURRENT_YEAR = new Date().getFullYear()
+
 // ---------------------------------------------------------------------------
 // COMPANY INFO: Update these values to match your actual company details
 // ---------------------------------------------------------------------------
@@ -438,7 +440,7 @@ function Footer() {
             {' \u00b7 '}
             <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
           </p>
-          <p className="footCopy">&copy; {new Date().getFullYear()} {COMPANY.name}. All rights reserved.</p>
+          <p className="footCopy">&copy; {CURRENT_YEAR} {COMPANY.name}. All rights reserved.</p>
         </div>
       </div>
     </footer>
