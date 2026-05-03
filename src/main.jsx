@@ -435,15 +435,40 @@ function Application() {
     // FORMSPREE POST — sends form fields to gudexpressllc@gmail.com
     // Formspree returns JSON when the Accept header is set to application/json.
     // On failure the JSON body contains an `errors` array with details.
+    //
+    // HOW THIS HANDLER WORKS (do not change without reading these notes):
+    //   1. We create a FormData object from the form element — this captures all
+    //      named input, select, and textarea values automatically.
+    //   2. We append '_gotcha' with an empty string. Formspree uses this as a
+    //      honeypot: bots often fill it in, causing Formspree to reject the
+    //      submission as spam. Legitimate users never see or interact with it.
+    //   3. We do NOT manually set the Content-Type header. When body is FormData,
+    //      the browser sets Content-Type to multipart/form-data with the correct
+    //      boundary string. Setting it manually breaks the boundary and Formspree
+    //      will reject the request.
+    //   4. Accept: application/json tells Formspree to return structured JSON so
+    //      we can parse error messages for console debugging.
+    //   5. On success we call form.reset() to clear all fields before showing
+    //      the success screen. On error or network failure we show an error screen
+    //      with the company phone and email so the user can still reach us.
     // ---------------------------------------------------------------------------
+    const form = e.target
+    const data = new FormData(form)
+    // Append honeypot for spam protection — must be empty for Formspree to accept
+    data.append('_gotcha', '')
+
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
-        body: new FormData(e.target),
+        body: data,
+        // Do NOT set Content-Type here — let the browser set multipart/form-data
+        // with the correct boundary automatically (required for FormData uploads).
         headers: { Accept: 'application/json' },
       })
 
       if (res.ok) {
+        // Clear all form fields before switching to the success view
+        form.reset()
         setStatus('success')
       } else {
         // Parse Formspree's JSON error body for console debugging
