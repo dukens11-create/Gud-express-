@@ -581,6 +581,81 @@ textarea {
   animation: spin 0.8s linear infinite;
 }
 
+.errorIcon {
+  color: #f87171;
+}
+
+/* ─── Error state ──────────────────────────────────────────────────────────── */
+.errorBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  padding: 60px 0;
+  max-width: 640px;
+}
+
+.errorBox h2 {
+  font-size: clamp(28px, 4vw, 42px);
+  margin: 0;
+}
+
+.errorBox p {
+  color: #cbd5e1;
+  font-size: 18px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ─── Team & Technology gallery ────────────────────────────────────────── */
+.teamTech {
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.teamTechGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  margin-top: 40px;
+}
+
+.teamTechCard {
+  margin: 0;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.teamTechCard img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  display: block;
+}
+
+.teamTechCard figcaption {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.teamTechCard figcaption strong {
+  font-size: 17px;
+  color: #f1f5f9;
+}
+
+.teamTechCard figcaption p {
+  margin: 0;
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.55;
+}
+
 /* ─── Contact ─────────────────────────────────────────────────────────── */
 .contact {
   text-align: center;
