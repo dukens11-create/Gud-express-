@@ -401,11 +401,19 @@ function Requirements() {
 // ============================================================
 
 // ---------------------------------------------------------------------------
-// FORMSPREE ENDPOINT
-// Replace YOUR_FORMSPREE_KEY with the form ID from your Formspree dashboard.
-// See README → "Formspree Integration" for step-by-step instructions.
+// FORMSPREE ENDPOINT — currently active, submissions go to gudexpressllc@gmail.com
+// To change this endpoint in the future:
+//   1. Sign up / log in at https://formspree.io
+//   2. Create a new form and set the recipient to gudexpressllc@gmail.com
+//   3. Replace the form ID below (the part after /f/) with your new form ID
+//   4. Rebuild and redeploy: npm run build
+// See README → "Formspree Integration" for full details.
+//
+// NOTE: The form ID is intentionally public (Formspree is a front-end service).
+// To reduce spam, enable reCAPTCHA or the honeypot field in your Formspree
+// dashboard under Settings → Spam Filtering.
 // ---------------------------------------------------------------------------
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_KEY'
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgodojkw'
 
 function Application() {
   const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success' | 'error'

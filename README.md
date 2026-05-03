@@ -198,16 +198,26 @@ the `useEffect` hook in `src/main.jsx`.
 
 Application form submissions are sent to **gudexpressllc@gmail.com** via [Formspree](https://formspree.io).
 
-### How to activate (one-time setup)
+### Current endpoint (already active)
 
-1. Go to [formspree.io](https://formspree.io) and sign up for a free account.
+The form is currently connected to:
+
+```
+https://formspree.io/f/xgodojkw
+```
+
+Submissions are delivered directly to **gudexpressllc@gmail.com**.
+
+### How to change the endpoint in the future
+
+1. Go to [formspree.io](https://formspree.io) and sign up / log in.
 2. Click **"+ New Form"** and set the recipient email to `gudexpressllc@gmail.com`.
 3. Copy the **Form ID** shown in your dashboard (looks like `xabcdefg`).
-4. Open `src/main.jsx` and find the line:
+4. Open `src/main.jsx` and find the `FORMSPREE_ENDPOINT` constant (search for `FORMSPREE_ENDPOINT`):
    ```js
-   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_KEY'
+   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgodojkw'
    ```
-5. Replace `YOUR_FORMSPREE_KEY` with your actual form ID:
+5. Replace the form ID (`xgodojkw`) with your new form ID:
    ```js
    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xabcdefg'
    ```
