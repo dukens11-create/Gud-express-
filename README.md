@@ -2,6 +2,8 @@
 
 [![Build](https://github.com/dukens11-create/Gud-express-/actions/workflows/build.yml/badge.svg)](https://github.com/dukens11-create/Gud-express-/actions/workflows/build.yml)
 
+![Homepage screenshot with modern layout, branding, and navigation](public/homepage-preview.png)
+
 A professional React + Vite website for **GUD Express LLC** — helping box truck owner-operators
 work under MC authority with dispatch service, factoring support, and payment coordination.
 
