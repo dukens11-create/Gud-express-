@@ -27,15 +27,6 @@ import gudLogo from './assets/gud-logo.png'
 import truckImg from './assets/truck.png'
 import teamImg from './assets/team.png'
 
-// ---------------------------------------------------------------------------
-// TEAM & TECHNOLOGY IMAGES
-// Replace these three images with your own professional photos.
-// Recommended: dispatcher at work, team in operations center, driver support rep.
-// Place replacement files in src/assets/ and update the import paths below.
-// ---------------------------------------------------------------------------
-import teamOps1Img from './assets/team-ops1.png'
-import teamOps2Img from './assets/team-ops2.png'
-import teamOps3Img from './assets/team-ops3.png'
 
 const CURRENT_YEAR = new Date().getFullYear()
 
@@ -272,35 +263,24 @@ function TeamSection() {
 }
 
 // ============================================================
-// TeamTech — "Our Team & Technology" photo gallery
-// IMAGES: Replace team-ops1.png, team-ops2.png, team-ops3.png in
-// src/assets/ with your own professional photos. Recommended:
-//   team-ops1.png → dispatcher coordinating routes at a workstation
-//   team-ops2.png → team collaborating in an operations center
-//   team-ops3.png → driver support representative assisting an owner-operator
+// TeamTech — "Our Team & Technology" section
 // ============================================================
-function TeamTech() {
-  const photos = [
-    {
-      src: teamOps1Img,
-      alt: 'Professional GUD Express dispatcher coordinating logistics using advanced route-mapping technology',
-      caption: 'Expert Dispatch Coordination',
-      desc: 'Our dispatchers use cutting-edge tools to find, negotiate, and book the best loads for every owner-operator.',
-    },
-    {
-      src: teamOps2Img,
-      alt: 'GUD Express operations team collaborating in a modern logistics control center',
-      caption: 'Teamwork at Every Level',
-      desc: 'A dedicated team works together around the clock to keep drivers moving and freight flowing.',
-    },
-    {
-      src: teamOps3Img,
-      alt: 'GUD Express driver support representative providing top-tier assistance to an owner-operator',
-      caption: 'Dedicated Driver Support',
-      desc: 'Our support staff is always ready to help with paperwork, settlements, and anything drivers need on the road.',
-    },
-  ]
+const teamTechItems = [
+  {
+    caption: 'Expert Dispatch Coordination',
+    desc: 'Our dispatchers use cutting-edge tools to find, negotiate, and book the best loads for every owner-operator.',
+  },
+  {
+    caption: 'Teamwork at Every Level',
+    desc: 'A dedicated team works together around the clock to keep drivers moving and freight flowing.',
+  },
+  {
+    caption: 'Dedicated Driver Support',
+    desc: 'Our support staff is always ready to help with paperwork, settlements, and anything drivers need on the road.',
+  },
+]
 
+function TeamTech() {
   return (
     <section className="section teamTech">
       <div className="container">
@@ -311,10 +291,8 @@ function TeamTech() {
         </div>
 
         <div className="teamTechGrid">
-          {photos.map(({ src, alt, caption, desc }) => (
+          {teamTechItems.map(({ caption, desc }) => (
             <figure className="teamTechCard" key={caption}>
-              {/* IMAGES: Replace the imported PNG with your own photo — see comment above the import */}
-              <img src={src} alt={alt} loading="lazy" />
               <figcaption>
                 <strong>{caption}</strong>
                 <p>{desc}</p>

@@ -236,17 +236,4 @@ The application form sends submissions to **gudexpressllc@gmail.com** via Formsp
 See the **"Formspree Integration"** section above for setup steps and the
 `FORMSPREE_ENDPOINT` constant in `src/main.jsx` for the exact configuration point.
 
----
 
-## Our Team &amp; Technology Images
-
-Three professional placeholder images are included in `src/assets/`:
-
-| File | Replace with |
-|---|---|
-| `src/assets/team-ops1.png` | Dispatcher coordinating routes at a workstation |
-| `src/assets/team-ops2.png` | Team collaborating in an operations center |
-| `src/assets/team-ops3.png` | Driver support representative assisting an owner-operator |
-
-To swap in your own photos, simply replace the PNG files listed above and rebuild:
-`npm run build`
