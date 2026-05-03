@@ -203,7 +203,7 @@ function Hero() {
         <div className="heroImage">
           <img src={truckImg} alt="GUD Express branded box truck" />
           <div className="priceCard">
-            <strong>10% – 15%</strong>
+            <strong>8% – 15%</strong>
             <span>weekly revenue fee</span>
           </div>
         </div>
@@ -268,9 +268,9 @@ function Pricing() {
     <section className="section dark">
       <div className="container pricing">
         <h2>Simple Weekly Fee</h2>
-        <div className="big">10% – 15%</div>
+        <div className="big">8% – 15%</div>
         <p>
-          Owner-operators pay 10% to 15% of weekly gross revenue for dispatch, factoring
+          Owner-operators pay 8% to 15% of weekly gross revenue for dispatch, factoring
           coordination, payment support, and business assistance.
         </p>
       </div>
