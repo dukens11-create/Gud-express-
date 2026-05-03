@@ -46,7 +46,7 @@ requirements checklist shown on the website.
 | MC | 1528475 |
 | DOT | 4039907 |
 | Phone | (775) 389-1414 |
-| Email | gudexpress@gudxp.com |
+| Email | gudexpressllc@gmail.com |
 
 ---
 

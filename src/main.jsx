@@ -38,7 +38,7 @@ const COMPANY = {
   mc: '1528475',
   phone: '(775) 389-1414',
   phoneRaw: '7753891414',
-  email: 'gudexpress@gudxp.com',
+  email: 'gudexpressllc@gmail.com',
 }
 
 // Services offered — update text or add/remove entries as needed
