@@ -268,7 +268,8 @@ Key image files in `src/assets/`:
 
 | File | Replace with |
 |---|---|
-| `src/assets/truck.png` | **image2** — Gud Express branded semi truck photo (used in hero and application section) |
+| `src/assets/semi-truck.png` | **Semi truck application image** — featured in the application section to show semi trucks are accepted. Replace with any high-quality landscape PNG of your semi truck. |
+| `src/assets/truck.png` | Gud Express branded truck photo used in the hero section |
 | `src/assets/team.png` | Real team or operations photo |
 | `src/assets/team-ops1.jpg` | Dispatcher coordinating routes at a workstation |
 | `src/assets/team-ops2.jpg` | Team collaborating in an operations center |
