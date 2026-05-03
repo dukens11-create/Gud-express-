@@ -13,10 +13,28 @@ work under MC authority with dispatch service, factoring support, and payment co
 - Box truck owner-operator program details (MC / DOT numbers)
 - Dispatch, factoring, and payment support sections
 - Online driver application form with loading state and success screen
-- Document upload checklist
+- Document upload checklist (driver license and direct deposit info only)
 - Mobile-responsive design with hamburger navigation
 - SEO-ready: Open Graph + Twitter Card meta tags
 - SVG favicon
+
+---
+
+## Insurance, W-9, and Truck Registration Policy
+
+> **All drivers must use Gud Express-provided Insurance, W-9, and Truck Registration.**
+
+Applicants are **not** asked to provide their own insurance, W-9, or truck registration documents.
+Gud Express handles all three on behalf of every driver:
+
+| Document | Policy |
+|---|---|
+| **Insurance** | All drivers work under Gud Express insurance. Do not provide your own. |
+| **W-9** | All drivers use the Gud Express W-9. Do not provide your own W-9. |
+| **Truck Registration** | All trucks must be registered under Gud Express. Do not provide your own registration. |
+
+This policy is reflected in the application form (no upload fields for these documents) and in the
+requirements checklist shown on the website.
 
 ---
 
