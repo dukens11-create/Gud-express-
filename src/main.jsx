@@ -391,39 +391,37 @@ function Requirements() {
 // Application — driver application form
 // Submissions are sent to gudexpressllc@gmail.com via Formspree.
 //
-// HOW TO UPDATE THE FORMSPREE KEY:
-//   1. Sign up (free) at https://formspree.io
-//   2. Create a new form — Formspree will give you a unique form ID
-//   3. Find the FORMSPREE_ENDPOINT constant below and replace
-//      YOUR_FORMSPREE_KEY with your actual form ID, e.g.:
-//        'https://formspree.io/f/xabcdefg'
-//   4. Rebuild and redeploy: npm run build
+// HOW TO UPDATE THE FORMSPREE ENDPOINT IN THE FUTURE:
+//   1. Sign up / log in at https://formspree.io
+//   2. Create a new form — set recipient to gudexpressllc@gmail.com
+//   3. Copy the new Form ID (e.g. xabcdefg) from your Formspree dashboard
+//   4. Replace the form ID in the FORMSPREE_ENDPOINT constant below:
+//        const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xabcdefg'
+//   5. Rebuild and redeploy: npm run build
+// See README → "Formspree Integration" for full details.
 // ============================================================
 
 // ---------------------------------------------------------------------------
-// FORMSPREE ENDPOINT — currently active, submissions go to gudexpressllc@gmail.com
-// To change this endpoint in the future:
-//   1. Sign up / log in at https://formspree.io
-//   2. Create a new form and set the recipient to gudexpressllc@gmail.com
-//   3. Replace the form ID below (the part after /f/) with your new form ID
-//   4. Rebuild and redeploy: npm run build
-// See README → "Formspree Integration" for full details.
+// FORMSPREE ENDPOINT — active; submissions go to gudexpressllc@gmail.com
+// Form ID: xgodojkw
+// To change the endpoint: update the form ID (part after /f/) and redeploy.
 //
 // NOTE: The form ID is intentionally public (Formspree is a front-end service).
-// To reduce spam, enable reCAPTCHA or the honeypot field in your Formspree
-// dashboard under Settings → Spam Filtering.
+// Spam protection: a hidden _gotcha honeypot field is included in the form.
+// For extra protection, enable reCAPTCHA in your Formspree dashboard under
+// Settings → Spam Filtering.
 // ---------------------------------------------------------------------------
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgodojkw'
 
 function Application() {
   const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success' | 'error'
 
-  // Warn developers if the Formspree key has not been configured yet
+  // Warn developers if the Formspree endpoint looks like a placeholder
   useEffect(() => {
-    if (FORMSPREE_ENDPOINT.includes('YOUR_FORMSPREE_KEY')) {
+    if (!FORMSPREE_ENDPOINT.match(/^https:\/\/formspree\.io\/f\/[a-zA-Z0-9]+$/)) {
       console.warn(
-        '[GUD Express] Formspree endpoint is not configured. ' +
-        'Replace YOUR_FORMSPREE_KEY in src/main.jsx with your real Formspree form ID ' +
+        '[GUD Express] FORMSPREE_ENDPOINT does not look like a valid Formspree URL. ' +
+        'Update the FORMSPREE_ENDPOINT constant in src/main.jsx with your real form ID ' +
         'so applications are delivered to gudexpressllc@gmail.com.'
       )
     }
@@ -434,9 +432,9 @@ function Application() {
     setStatus('submitting')
 
     // ---------------------------------------------------------------------------
-    // FORMSPREE POST — sends all form fields to gudexpressllc@gmail.com
-    // If FORMSPREE_ENDPOINT still contains the placeholder key, the request
-    // will fail gracefully and show an error message to the applicant.
+    // FORMSPREE POST — sends form fields to gudexpressllc@gmail.com
+    // Formspree returns JSON when the Accept header is set to application/json.
+    // On failure the JSON body contains an `errors` array with details.
     // ---------------------------------------------------------------------------
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -448,11 +446,20 @@ function Application() {
       if (res.ok) {
         setStatus('success')
       } else {
-        // Formspree returned a non-OK status (e.g. invalid key, rate limit)
+        // Parse Formspree's JSON error body for console debugging
+        let detail = ''
+        try {
+          const json = await res.json()
+          detail = json.errors?.map(err => err.message).join('; ') ?? json.error ?? ''
+        } catch (parseError) {
+          console.error('[GUD Express] Could not parse Formspree error response:', parseError)
+        }
+        console.error('[GUD Express] Formspree submission failed:', res.status, detail)
         setStatus('error')
       }
-    } catch {
-      // Network failure or FORMSPREE_ENDPOINT placeholder not yet updated
+    } catch (err) {
+      // Network failure or CORS error
+      console.error('[GUD Express] Formspree network error:', err)
       setStatus('error')
     }
   }
@@ -518,8 +525,14 @@ function Application() {
         </div>
 
         <form className="form" onSubmit={handleSubmit}>
+          {/* Formspree spam-protection: honeypot field must stay hidden and empty */}
+          <input type="text" name="_gotcha" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
+          {/* Custom email subject shown in gudexpressllc@gmail.com inbox */}
+          <input type="hidden" name="_subject" value="New Owner-Operator Application — GUD Express" />
+
           <div className="formRow">
-            <label>Full Name<input required name="fullName" /></label>
+            {/* "name" is the Formspree-recognised sender field — do not rename */}
+            <label>Full Name<input required name="name" /></label>
             <label>Phone Number<input required name="phone" /></label>
           </div>
 
@@ -570,11 +583,14 @@ function Application() {
 
           <h3>Upload Documents</h3>
           <div className="uploads">
-            {['Driver License', 'Voided Check / Direct Deposit'].map(doc => (
+            {[
+              ['Driver License', 'driverLicense'],
+              ['Voided Check / Direct Deposit', 'directDeposit'],
+            ].map(([doc, fieldName]) => (
               <label className="upload" key={doc}>
                 <UploadCloud size={22} />
                 <span>{doc}</span>
-                <input type="file" />
+                <input type="file" name={fieldName} />
               </label>
             ))}
           </div>
@@ -595,7 +611,7 @@ function Application() {
           </button>
 
           {/* FORMSPREE: This form posts to FORMSPREE_ENDPOINT (defined above the component).
-              Replace YOUR_FORMSPREE_KEY in that constant with your real Formspree form ID.
+              To update the endpoint, change the form ID in the FORMSPREE_ENDPOINT constant.
               See README → "Formspree Integration" for step-by-step setup instructions. */}
           <p className="smallNote">
             Your information is kept private and will only be used to contact you about the
