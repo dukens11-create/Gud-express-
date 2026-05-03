@@ -23,10 +23,10 @@ import gudLogo from './assets/gud-logo.png'
 
 // ---------------------------------------------------------------------------
 // IMAGES: Replace truck.png and team.png in src/assets/ with your own photos.
-// For the application section semi truck visual, replace truck.png with
-// image2 (the Gud Express branded semi truck photo) and rebuild.
+// For the application section semi truck visual, semi-truck.png is used.
 // ---------------------------------------------------------------------------
 import truckImg from './assets/truck.png'
+import semiTruckImg from './assets/semi-truck.png'
 import teamImg from './assets/team.png'
 
 // ---------------------------------------------------------------------------
@@ -464,15 +464,10 @@ function Application() {
             commercial vehicles. Fill in the application to join our MC authority program.
           </p>
 
-          {/*
-            TRUCK IMAGE — application section visual (image2).
-            Currently using truck.png as a placeholder.
-            TO UPDATE: copy your image2 file to src/assets/, rename it to truck.png
-            (or update the import path at the top of src/main.jsx), then rebuild.
-          */}
+          {/* SEMI TRUCK IMAGE — application section visual (semi-truck.png) */}
           <img
-            src={truckImg}
-            alt="Gud Express branded semi truck"
+            src={semiTruckImg}
+            alt="Gud Express branded semi truck for MC Authority application"
             className="applyTruckImg"
           />
 
