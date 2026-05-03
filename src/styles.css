@@ -488,16 +488,32 @@ textarea {
   color: #fbbf24;
 }
 
+/* Truck image wrapper — application section (semi-truck.png visual) */
+.applyTruckFigure {
+  margin: 20px 0;
+}
+
 /* Truck image inside the application section (semi-truck.png visual) */
 .applyTruckImg {
   width: 100%;
-  max-height: 320px;
+  height: auto;
+  max-height: 460px;
   object-fit: contain;
   border-radius: 16px;
-  margin: 20px 0;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   display: block;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 4px 24px rgba(245, 158, 11, 0.15);
+  padding: 8px;
+}
+
+/* Caption below the truck image */
+.applyTruckCaption {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #fbbf24;
+  text-align: center;
+  letter-spacing: 0.02em;
 }
 
 /* Google Form right column */

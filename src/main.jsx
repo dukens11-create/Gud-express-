@@ -465,11 +465,16 @@ function Application() {
           </p>
 
           {/* SEMI TRUCK IMAGE — application section visual (semi-truck.png) */}
-          <img
-            src={semiTruckImg}
-            alt="Gud Express branded semi truck for MC Authority application"
-            className="applyTruckImg"
-          />
+          <figure className="applyTruckFigure">
+            <img
+              src={semiTruckImg}
+              alt="Gud Express branded semi truck for MC Authority application"
+              className="applyTruckImg"
+            />
+            <figcaption className="applyTruckCaption">
+              Semi Trucks Accepted — Gud Express MC Authority #{COMPANY.mc}
+            </figcaption>
+          </figure>
 
           {/* Document collection notice */}
           <div className="gudProvidedNotice">
