@@ -53,9 +53,9 @@ const services = [
 const requirements = [
   'Valid driver license',
   'Box truck information',
-  'Active insurance or insurance in progress',
-  'W-9 form',
-  'Truck registration',
+  'Insurance (provided by Gud Express)',
+  'W-9 form (provided by Gud Express)',
+  'Truck registration (provided by Gud Express)',
   'Direct deposit or voided check',
   'Driving experience information',
 ]
@@ -204,7 +204,7 @@ function Hero() {
         <div className="heroImage">
           <img src={truckImg} alt="GUD Express branded box truck" />
           <div className="priceCard">
-            <strong>10% – 15%</strong>
+            <strong>8% – 15%</strong>
             <span>weekly revenue fee</span>
           </div>
         </div>
@@ -269,9 +269,9 @@ function Pricing() {
     <section className="section dark">
       <div className="container pricing">
         <h2>Simple Weekly Fee</h2>
-        <div className="big">10% – 15%</div>
+        <div className="big">8% – 15%</div>
         <p>
-          Owner-operators pay 10% to 15% of weekly gross revenue for dispatch, factoring
+          Owner-operators pay 8% to 15% of weekly gross revenue for dispatch, factoring
           coordination, payment support, and business assistance.
         </p>
       </div>
@@ -393,9 +393,9 @@ function Application() {
             <label>Insurance Status
               <select required name="insurance">
                 <option value="">Select</option>
-                <option>Active insurance</option>
-                <option>In progress</option>
-                <option>Need help</option>
+                <option>Will use Gud Express insurance</option>
+                <option>Ready to enroll</option>
+                <option>Have questions</option>
               </select>
             </label>
           </div>
@@ -414,7 +414,7 @@ function Application() {
 
           <h3>Upload Documents</h3>
           <div className="uploads">
-            {['Driver License', 'Insurance', 'W-9', 'Truck Registration', 'Voided Check / Direct Deposit'].map(doc => (
+            {['Driver License', 'Voided Check / Direct Deposit'].map(doc => (
               <label className="upload" key={doc}>
                 <UploadCloud size={22} />
                 <span>{doc}</span>
@@ -422,6 +422,10 @@ function Application() {
               </label>
             ))}
           </div>
+          <p className="smallNote">
+            Insurance, W-9, and truck registration are provided by Gud Express — you do not need
+            to upload your own copies.
+          </p>
 
           <label>
             Message
