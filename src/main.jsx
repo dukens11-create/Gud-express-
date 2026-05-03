@@ -526,7 +526,7 @@ function Application() {
               </a>
             </>
           ) : (
-            /* ── Placeholder state ──────────────────────────────────────
+            /* ── Direct-apply state ──────────────────────────────────────
                Shown until the owner sets GOOGLE_FORM_URL above.
                OWNER: follow the instructions at the top of this section
                to create your Google Form and paste the link above.
@@ -534,11 +534,21 @@ function Application() {
             ─────────────────────────────────────────────────────────── */
             <div className="googleFormPlaceholder">
               <ClipboardList size={52} aria-hidden="true" />
-              <h3>Application Form Coming Soon</h3>
+              <h3>Apply Now — Contact Us Directly</h3>
               <p className="leadSmall">
-                Our online application (with secure document upload) will appear here shortly.
-                In the meantime, call or email us directly to start the process!
+                Ready to get started? Call or email us to begin your owner-operator application.
+                We'll walk you through every step and get your documents submitted fast — semi
+                trucks, box trucks, and all qualified commercial vehicles welcome.
               </p>
+              <div className="applyDocList">
+                <p><strong>Have these documents ready:</strong></p>
+                <ul>
+                  <li>Valid Commercial Driver's License (CDL)</li>
+                  <li>Proof of commercial auto insurance</li>
+                  <li>Voided check or direct deposit info</li>
+                  <li>Vehicle registration / title</li>
+                </ul>
+              </div>
               <div className="heroActions">
                 <a href={`tel:${COMPANY.phoneRaw}`} className="primary">
                   <Phone size={18} /> Call {COMPANY.phone}

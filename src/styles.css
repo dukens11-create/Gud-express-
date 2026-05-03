@@ -568,6 +568,31 @@ textarea {
   color: #fff;
 }
 
+/* Document checklist inside the direct-apply card */
+.applyDocList {
+  text-align: left;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 12px;
+  padding: 16px 20px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.applyDocList p {
+  margin: 0 0 8px;
+  color: #fbbf24;
+  font-size: 14px;
+}
+
+.applyDocList ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #e2e8f0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
 /* Privacy note below the application section */
 .applyNote {
   text-align: center;
