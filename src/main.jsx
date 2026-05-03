@@ -31,11 +31,13 @@ import teamImg from './assets/team.png'
 // TEAM & TECHNOLOGY IMAGES
 // Replace these three images with your own professional photos.
 // Recommended: dispatcher at work, team in operations center, driver support rep.
-// Place replacement files in src/assets/ and update the import paths below.
+// Place replacement .jpg files in src/assets/ and update the import paths below.
+// To add a new image: import it here and add an entry to the photos array in TeamTech().
+// To remove an image: delete its import and remove its entry from the photos array.
 // ---------------------------------------------------------------------------
-import teamOps1Img from './assets/team-ops1.png'
-import teamOps2Img from './assets/team-ops2.png'
-import teamOps3Img from './assets/team-ops3.png'
+import teamOps1Img from './assets/team-ops1.jpg'
+import teamOps2Img from './assets/team-ops2.jpg'
+import teamOps3Img from './assets/team-ops3.jpg'
 
 const CURRENT_YEAR = new Date().getFullYear()
 
@@ -273,11 +275,13 @@ function TeamSection() {
 
 // ============================================================
 // TeamTech — "Our Team & Technology" photo gallery
-// IMAGES: Replace team-ops1.png, team-ops2.png, team-ops3.png in
-// src/assets/ with your own professional photos. Recommended:
-//   team-ops1.png → dispatcher coordinating routes at a workstation
-//   team-ops2.png → team collaborating in an operations center
-//   team-ops3.png → driver support representative assisting an owner-operator
+// IMAGES: The following .jpg files are imported and displayed in this gallery.
+// To add an image: drop a .jpg into src/assets/, import it at the top of
+//   this file, and add a new entry to the photos array below.
+// To remove an image: delete its import and remove its entry from photos[].
+//   team-ops1.jpg → dispatcher coordinating routes at a workstation
+//   team-ops2.jpg → team collaborating in an operations center
+//   team-ops3.jpg → driver support representative assisting an owner-operator
 // ============================================================
 function TeamTech() {
   const photos = [
@@ -313,7 +317,7 @@ function TeamTech() {
         <div className="teamTechGrid">
           {photos.map(({ src, alt, caption, desc }) => (
             <figure className="teamTechCard" key={caption}>
-              {/* IMAGES: Replace the imported PNG with your own photo — see comment above the import */}
+              {/* IMAGES: Replace the imported .jpg with your own photo — see comments above the import */}
               <img src={src} alt={alt} loading="lazy" />
               <figcaption>
                 <strong>{caption}</strong>
