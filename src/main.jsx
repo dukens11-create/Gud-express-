@@ -150,7 +150,7 @@ function Header() {
       <div className="container nav">
         {/* BRANDING: Logo and company name — update img in src/assets/gud-logo.png */}
         <a href="#home" className="brand" onClick={() => setMenuOpen(false)}>
-          <img src={gudLogo} alt="GUD Express Logo" />
+          <img src={gudLogo} alt="Gud Express LLC — Box Truck & Semi Truck Owner-Operator Dispatch" />
           <span>
             <strong>GUD Express</strong>
             <small>MC {COMPANY.mc} | DOT {COMPANY.dot}</small>

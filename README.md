@@ -134,7 +134,7 @@ Gud-express-/
 | Services offered | `src/main.jsx` → `services` array |
 | Application requirements checklist | `src/main.jsx` → `requirements` array |
 | Google Form link / embed | `src/main.jsx` → `GOOGLE_FORM_URL` and `GOOGLE_FORM_EMBED_URL` constants |
-| Logo image | Replace `src/assets/gud-logo.png` |
+| Logo image | Replace `src/assets/gud-logo.png` (see **Logo Asset** section below) |
 | Hero truck photo / application image | Replace `src/assets/truck.png` with image2 (Gud Express branded semi truck) |
 | Team / operations photo | Replace `src/assets/team.png` |
 | Tab favicon | Replace `public/favicon.svg` |
@@ -143,7 +143,31 @@ Gud-express-/
 
 ---
 
-## Visit Notification Webhook
+## Logo Asset
+
+The Gud Express logo is displayed in the sticky header at the top of every page.
+
+**Asset location:** `src/assets/gud-logo.png`
+
+**How to update the logo:**
+
+1. Prepare a high-resolution PNG or SVG of your logo (recommended minimum: **400 × 200 px**,
+   transparent background preferred).
+2. Replace `src/assets/gud-logo.png` with your new file (keep the same filename, or update the
+   import at the top of `src/main.jsx`).
+3. The header CSS (`src/styles.css` → `.brand img`) uses `object-fit: contain` and `width: auto`
+   so the full logo is always shown without cropping or letter cutoff, regardless of aspect ratio.
+   The logo scales to a maximum height of **54 px** on desktop; on small screens it is capped at
+   **48 px**.
+4. Run `npm run build` and verify the logo looks crisp in both desktop and mobile views.
+
+> **Alt text** — The logo `<img>` element includes a descriptive `alt` attribute
+> (`"Gud Express LLC — Box Truck & Semi Truck Owner-Operator Dispatch"`) for accessibility and SEO.
+> Update this text in `src/main.jsx` → `Header()` if your branding changes.
+
+---
+
+
 
 The site sends a **POST request to a webhook URL** every time the homepage loads, so you can be
 notified of each visit via email, SMS, Slack, Discord, and more.

@@ -72,9 +72,13 @@ textarea {
 
 .brand img {
   height: 54px;
-  width: 90px;
-  object-fit: cover;
-  border-radius: 12px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  border-radius: 8px;
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .brand strong {
@@ -703,8 +707,9 @@ footer p {
   }
 
   .brand img {
-    height: 46px;
-    width: 78px;
+    height: 48px;
+    width: auto;
+    max-width: 150px;
   }
 
   .hero {
