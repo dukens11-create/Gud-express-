@@ -121,6 +121,59 @@ Gud-express-/
 
 ---
 
+## Visit Notification Webhook
+
+The site sends a **POST request to a webhook URL** every time the homepage loads, so you can be
+notified of each visit via email, SMS, Slack, Discord, and more.
+
+### How to Set It Up
+
+1. Open `src/main.jsx` and search for `WEBHOOK_URL`.
+2. Replace the placeholder value with your real webhook URL:
+
+   ```js
+   const WEBHOOK_URL = 'https://your-webhook-url-here.com/notify' // ← replace this
+   ```
+
+3. Rebuild and redeploy the site (`npm run build`).
+
+### Recommended Free Webhook Services
+
+| Service | What it does | URL format |
+|---|---|---|
+| **IFTTT Webhooks** | Sends you an email / push notification | `https://maker.ifttt.com/trigger/YOUR_EVENT/with/key/YOUR_KEY` |
+| **Zapier Webhooks** | Routes the event to 5,000+ apps (email, Slack, sheets…) | Get URL from your Zap's "Catch Hook" step |
+| **Make (Integromat)** | Powerful automation, free tier available | Get URL from your scenario's Webhook module |
+| **Discord Webhook** | Posts a message to a Discord channel | Create via channel Settings → Integrations → Webhooks |
+| **Slack Incoming Webhook** | Posts a message to a Slack channel | Create via api.slack.com/apps → Incoming Webhooks |
+
+### Customizing the Payload
+
+By default the request body contains:
+
+```json
+{
+  "event": "page_visit",
+  "page": "homepage",
+  "timestamp": "2025-01-01T00:00:00.000Z"
+}
+```
+
+You can add extra fields (e.g. `referrer: document.referrer`) in the `body` object inside
+the `useEffect` hook in `src/main.jsx`.
+
+### Privacy Considerations
+
+- **Do not send personally identifiable information (PII)** — e.g. IP addresses, user-agent strings,
+  or any data that could identify a specific individual — without a clear privacy policy and user
+  consent, as required by GDPR, CCPA, and similar laws.
+- For high-traffic sites, a webhook ping on every single visit may become noisy. Consider switching
+  to an analytics platform (Google Analytics, Plausible, Fathom) or adding rate-limiting logic.
+- If the webhook endpoint is unreachable, the site continues to work normally — errors are silently
+  ignored so visitors are never affected.
+
+---
+
 ## Important Note — Form Backend
 
 The application form is **front-end only**. To receive real driver applications,

@@ -7,7 +7,7 @@
  * gud-logo.png, truck.png, and team.png with your own images.
  */
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   ShieldCheck, ClipboardList, DollarSign, Phone, Mail,
@@ -64,6 +64,52 @@ const requirements = [
 // Root App — arranges all page sections in order
 // ============================================================
 function App() {
+  // ---------------------------------------------------------------------------
+  // VISIT NOTIFICATION WEBHOOK
+  // This effect fires a POST request to your webhook URL each time the
+  // homepage loads, so you are notified of every visit.
+  //
+  // HOW TO CUSTOMIZE:
+  //   1. Replace the URL below with your own webhook endpoint.
+  //   2. Popular free options:
+  //        • IFTTT Webhooks → https://ifttt.com/maker_webhooks
+  //          URL format: https://maker.ifttt.com/trigger/YOUR_EVENT/with/key/YOUR_KEY
+  //        • Zapier Webhooks → https://zapier.com/apps/webhook/integrations
+  //        • Make (Integromat) → https://www.make.com/en/integrations/webhook
+  //        • Discord / Slack webhook URLs
+  //   3. You can add extra data (e.g. timestamp or referrer) to the body object.
+  //
+  // PRIVACY NOTE:
+  //   Notifying yourself on every page view may be subject to privacy laws
+  //   (GDPR, CCPA, etc.) depending on the data you collect. Avoid sending
+  //   personally identifiable information without user consent. For high-
+  //   traffic sites, consider throttling this call or switching to an
+  //   analytics platform instead.
+  // ---------------------------------------------------------------------------
+  useEffect(() => {
+    const WEBHOOK_URL = 'https://your-webhook-url-here.com/notify' // ← Replace with your actual webhook URL
+
+    // Only fire once per browser session (guards against React 18 StrictMode
+    // double-invocation in development and accidental component remounts).
+    if (sessionStorage.getItem('visit_notified')) return
+    sessionStorage.setItem('visit_notified', '1')
+
+    // Skip the request if the URL is still the placeholder
+    if (!WEBHOOK_URL || WEBHOOK_URL.includes('your-webhook-url-here')) return
+
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event: 'page_visit',
+        page: 'homepage',
+        timestamp: new Date().toISOString(),
+      }),
+    }).catch(() => {
+      // Silently ignore errors so a failed webhook never disrupts the site
+    })
+  }, []) // Empty dependency array = runs once on mount (i.e., on every page load)
+
   return (
     <div className="app">
       <Header />
