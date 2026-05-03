@@ -50,12 +50,11 @@ const services = [
 ]
 
 // Requirements checklist — edit items as needed
+// Note: Insurance, W-9, and Truck Registration are handled by Gud Express.
+// Do NOT ask applicants to provide their own versions of those documents.
 const requirements = [
   'Valid driver license',
   'Box truck information',
-  'Active insurance or insurance in progress',
-  'W-9 form',
-  'Truck registration',
   'Direct deposit or voided check',
   'Driving experience information',
 ]
@@ -302,6 +301,19 @@ function Requirements() {
               <span>{item}</span>
             </div>
           ))}
+
+          {/* Policy notice — Gud Express handles these three items on behalf of all drivers */}
+          <div className="gudProvidedNotice">
+            <ShieldCheck size={22} />
+            <div>
+              <strong>Provided by Gud Express — Do not bring your own:</strong>
+              <ul>
+                <li><strong>Insurance</strong> — You must use Gud Express insurance.</li>
+                <li><strong>W-9</strong> — You must use the Gud Express W-9.</li>
+                <li><strong>Truck Registration</strong> — You must be registered under Gud Express.</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -390,18 +402,10 @@ function Application() {
               </select>
             </label>
 
-            <label>Insurance Status
-              <select required name="insurance">
-                <option value="">Select</option>
-                <option>Active insurance</option>
-                <option>In progress</option>
-                <option>Need help</option>
-              </select>
-            </label>
+            <label>Years of Experience<input name="experience" /></label>
           </div>
 
           <div className="formRow">
-            <label>Years of Experience<input name="experience" /></label>
             <label>Ready to Start
               <select name="startDate">
                 <option>Immediately</option>
@@ -412,9 +416,22 @@ function Application() {
             </label>
           </div>
 
+          {/* Policy notice — displayed prominently before document uploads */}
+          <div className="gudProvidedNotice">
+            <ShieldCheck size={22} />
+            <div>
+              <strong>Important: Gud Express provides Insurance, W-9, and Truck Registration</strong>
+              <p>
+                Do <strong>not</strong> provide your own insurance, W-9, or truck registration.
+                All drivers must use Gud Express insurance, the Gud Express W-9, and be registered
+                under Gud Express. These will be handled on your behalf.
+              </p>
+            </div>
+          </div>
+
           <h3>Upload Documents</h3>
           <div className="uploads">
-            {['Driver License', 'Insurance', 'W-9', 'Truck Registration', 'Voided Check / Direct Deposit'].map(doc => (
+            {['Driver License', 'Voided Check / Direct Deposit'].map(doc => (
               <label className="upload" key={doc}>
                 <UploadCloud size={22} />
                 <span>{doc}</span>

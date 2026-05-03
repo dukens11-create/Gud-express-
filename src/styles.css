@@ -416,6 +416,46 @@ textarea {
   font-weight: 800;
 }
 
+/* Policy notice: Gud Express provides Insurance, W-9, and Truck Registration */
+.gudProvidedNotice {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: rgba(37, 99, 235, 0.18);
+  border: 1px solid rgba(37, 99, 235, 0.55);
+  border-radius: 14px;
+  padding: 16px 18px;
+  color: #dbeafe;
+  line-height: 1.55;
+}
+
+.gudProvidedNotice svg {
+  flex-shrink: 0;
+  color: #60a5fa;
+  margin-top: 2px;
+}
+
+.gudProvidedNotice strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.gudProvidedNotice ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.gudProvidedNotice ul li {
+  margin-bottom: 4px;
+}
+
+.gudProvidedNotice p {
+  margin: 4px 0 0;
+  color: #bfdbfe;
+  font-size: 14px;
+}
+
 /* ─── Application Form ────────────────────────────────────────────────── */
 .form {
   display: grid;
