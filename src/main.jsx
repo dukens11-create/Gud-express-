@@ -27,6 +27,16 @@ import gudLogo from './assets/gud-logo.png'
 import truckImg from './assets/truck.png'
 import teamImg from './assets/team.png'
 
+// ---------------------------------------------------------------------------
+// TEAM & TECHNOLOGY IMAGES
+// Replace these three images with your own professional photos.
+// Recommended: dispatcher at work, team in operations center, driver support rep.
+// Place replacement files in src/assets/ and update the import paths below.
+// ---------------------------------------------------------------------------
+import teamOps1Img from './assets/team-ops1.png'
+import teamOps2Img from './assets/team-ops2.png'
+import teamOps3Img from './assets/team-ops3.png'
+
 const CURRENT_YEAR = new Date().getFullYear()
 
 // ---------------------------------------------------------------------------
@@ -115,6 +125,7 @@ function App() {
       <Hero />
       <Services />
       <TeamSection />
+      <TeamTech />
       <Pricing />
       <Requirements />
       <Application />
@@ -261,6 +272,62 @@ function TeamSection() {
 }
 
 // ============================================================
+// TeamTech — "Our Team & Technology" photo gallery
+// IMAGES: Replace team-ops1.png, team-ops2.png, team-ops3.png in
+// src/assets/ with your own professional photos. Recommended:
+//   team-ops1.png → dispatcher coordinating routes at a workstation
+//   team-ops2.png → team collaborating in an operations center
+//   team-ops3.png → driver support representative assisting an owner-operator
+// ============================================================
+function TeamTech() {
+  const photos = [
+    {
+      src: teamOps1Img,
+      alt: 'Professional GUD Express dispatcher coordinating logistics using advanced route-mapping technology',
+      caption: 'Expert Dispatch Coordination',
+      desc: 'Our dispatchers use cutting-edge tools to find, negotiate, and book the best loads for every owner-operator.',
+    },
+    {
+      src: teamOps2Img,
+      alt: 'GUD Express operations team collaborating in a modern logistics control center',
+      caption: 'Teamwork at Every Level',
+      desc: 'A dedicated team works together around the clock to keep drivers moving and freight flowing.',
+    },
+    {
+      src: teamOps3Img,
+      alt: 'GUD Express driver support representative providing top-tier assistance to an owner-operator',
+      caption: 'Dedicated Driver Support',
+      desc: 'Our support staff is always ready to help with paperwork, settlements, and anything drivers need on the road.',
+    },
+  ]
+
+  return (
+    <section className="section teamTech">
+      <div className="container">
+        <div className="sectionHead">
+          <p className="badge">Our Team &amp; Technology</p>
+          <h2>People and Tools Behind Your Success</h2>
+          <p>GUD Express combines experienced professionals with modern logistics technology to keep owner-operators earning.</p>
+        </div>
+
+        <div className="teamTechGrid">
+          {photos.map(({ src, alt, caption, desc }) => (
+            <figure className="teamTechCard" key={caption}>
+              {/* IMAGES: Replace the imported PNG with your own photo — see comment above the import */}
+              <img src={src} alt={alt} loading="lazy" />
+              <figcaption>
+                <strong>{caption}</strong>
+                <p>{desc}</p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ============================================================
 // Pricing — fee highlight
 // ============================================================
 function Pricing() {
@@ -322,20 +389,64 @@ function Requirements() {
 
 // ============================================================
 // Application — driver application form
-// Connect this form to a backend (Formspree, Supabase, etc.)
-// to receive real applications. See README for instructions.
+// Submissions are sent to gudexpressllc@gmail.com via Formspree.
+//
+// HOW TO UPDATE THE FORMSPREE KEY:
+//   1. Sign up (free) at https://formspree.io
+//   2. Create a new form — Formspree will give you a unique form ID
+//   3. Find the FORMSPREE_ENDPOINT constant below and replace
+//      YOUR_FORMSPREE_KEY with your actual form ID, e.g.:
+//        'https://formspree.io/f/xabcdefg'
+//   4. Rebuild and redeploy: npm run build
 // ============================================================
-function Application() {
-  const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success'
 
-  function handleSubmit(e) {
+// ---------------------------------------------------------------------------
+// FORMSPREE ENDPOINT
+// Replace YOUR_FORMSPREE_KEY with the form ID from your Formspree dashboard.
+// See README → "Formspree Integration" for step-by-step instructions.
+// ---------------------------------------------------------------------------
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_KEY'
+
+function Application() {
+  const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success' | 'error'
+
+  // Warn developers if the Formspree key has not been configured yet
+  useEffect(() => {
+    if (FORMSPREE_ENDPOINT.includes('YOUR_FORMSPREE_KEY')) {
+      console.warn(
+        '[GUD Express] Formspree endpoint is not configured. ' +
+        'Replace YOUR_FORMSPREE_KEY in src/main.jsx with your real Formspree form ID ' +
+        'so applications are delivered to gudexpressllc@gmail.com.'
+      )
+    }
+  }, [])
+
+  async function handleSubmit(e) {
     e.preventDefault()
     setStatus('submitting')
 
-    // TODO: Replace this timeout with a real form submission call, e.g.:
-    //   await fetch('https://formspree.io/f/YOUR_FORM_ID', { method: 'POST', body: new FormData(e.target) })
-    // See README for backend integration options.
-    setTimeout(() => setStatus('success'), 1200)
+    // ---------------------------------------------------------------------------
+    // FORMSPREE POST — sends all form fields to gudexpressllc@gmail.com
+    // If FORMSPREE_ENDPOINT still contains the placeholder key, the request
+    // will fail gracefully and show an error message to the applicant.
+    // ---------------------------------------------------------------------------
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        body: new FormData(e.target),
+        headers: { Accept: 'application/json' },
+      })
+
+      if (res.ok) {
+        setStatus('success')
+      } else {
+        // Formspree returned a non-OK status (e.g. invalid key, rate limit)
+        setStatus('error')
+      }
+    } catch {
+      // Network failure or FORMSPREE_ENDPOINT placeholder not yet updated
+      setStatus('error')
+    }
   }
 
   if (status === 'success') {
@@ -357,6 +468,26 @@ function Application() {
           <button className="primary" onClick={() => setStatus('idle')}>
             Submit Another Application
           </button>
+        </div>
+      </section>
+    )
+  }
+
+  if (status === 'error') {
+    return (
+      <section id="apply" className="section dark">
+        <div className="container errorBox">
+          <Mail size={56} className="errorIcon" />
+          <h2>Submission Failed</h2>
+          <p>
+            We were unable to send your application at this time. Please try again, or contact us
+            directly and we will be happy to help.
+          </p>
+          <div className="heroActions center">
+            <button className="primary" onClick={() => setStatus('idle')}>Try Again</button>
+            <a href={`tel:${COMPANY.phoneRaw}`} className="secondary">Call {COMPANY.phone}</a>
+            <a href={`mailto:${COMPANY.email}`} className="secondary">Email Us</a>
+          </div>
         </div>
       </section>
     )
@@ -455,8 +586,9 @@ function Application() {
             }
           </button>
 
-          {/* BACKEND: Connect this form to Formspree, Supabase, or your own API.
-              See README -> "Important Note" for integration options. */}
+          {/* FORMSPREE: This form posts to FORMSPREE_ENDPOINT (defined above the component).
+              Replace YOUR_FORMSPREE_KEY in that constant with your real Formspree form ID.
+              See README → "Formspree Integration" for step-by-step setup instructions. */}
           <p className="smallNote">
             Your information is kept private and will only be used to contact you about the
             GUD Express owner-operator program.

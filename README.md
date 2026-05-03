@@ -194,17 +194,49 @@ the `useEffect` hook in `src/main.jsx`.
 
 ---
 
+## Formspree Integration
+
+Application form submissions are sent to **gudexpressllc@gmail.com** via [Formspree](https://formspree.io).
+
+### How to activate (one-time setup)
+
+1. Go to [formspree.io](https://formspree.io) and sign up for a free account.
+2. Click **"+ New Form"** and set the recipient email to `gudexpressllc@gmail.com`.
+3. Copy the **Form ID** shown in your dashboard (looks like `xabcdefg`).
+4. Open `src/main.jsx` and find the line:
+   ```js
+   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_KEY'
+   ```
+5. Replace `YOUR_FORMSPREE_KEY` with your actual form ID:
+   ```js
+   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xabcdefg'
+   ```
+6. Rebuild and redeploy: `npm run build`
+
+### What happens after a submission
+
+- **Success** → the applicant sees a confirmation screen thanking them and giving your phone/email.
+- **Failure** (network error or invalid key) → the applicant sees an error screen with your phone and email so they can contact you directly.
+
+---
+
 ## Important Note — Form Backend
 
-The application form is **front-end only**. To receive real driver applications,
-connect the form to a backend service. See the `TODO` comment in the `Application`
-component in `src/main.jsx` for the exact integration point.
+The application form sends submissions to **gudexpressllc@gmail.com** via Formspree.
+See the **"Formspree Integration"** section above for setup steps and the
+`FORMSPREE_ENDPOINT` constant in `src/main.jsx` for the exact configuration point.
 
-Recommended options:
+---
 
-| Service | Notes |
+## Our Team &amp; Technology Images
+
+Three professional placeholder images are included in `src/assets/`:
+
+| File | Replace with |
 |---|---|
-| [Formspree](https://formspree.io) | No backend needed — just swap the `fetch` URL |
-| [Supabase](https://supabase.com) | Full database, free tier available |
-| [Firebase](https://firebase.google.com) | Google cloud, good for real-time data |
-| [Airtable](https://airtable.com) | Spreadsheet-style database with an API |
+| `src/assets/team-ops1.png` | Dispatcher coordinating routes at a workstation |
+| `src/assets/team-ops2.png` | Team collaborating in an operations center |
+| `src/assets/team-ops3.png` | Driver support representative assisting an owner-operator |
+
+To swap in your own photos, simply replace the PNG files listed above and rebuild:
+`npm run build`
