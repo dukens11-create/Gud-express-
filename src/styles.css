@@ -506,6 +506,8 @@ textarea {
 }
 
 /* iframe wrapper for embedded Google Form */
+/* min-height: 860px — accommodates a typical 7–9 field Google Form without scrollbar.
+   Increase this value if your form is longer (more questions / file upload fields). */
 .googleFormFrame {
   width: 100%;
   min-height: 860px;
