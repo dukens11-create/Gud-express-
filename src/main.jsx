@@ -205,8 +205,16 @@ function Hero() {
           </p>
 
           <div className="heroActions">
-            <a href="#apply" className="primary">Start Application <ArrowRight size={18} /></a>
-            <a href={`tel:${COMPANY.phoneRaw}`} className="secondary">Call {COMPANY.phone}</a>
+            {formReady ? (
+              <a href="#apply" className="primary">Start Application <ArrowRight size={18} /></a>
+            ) : (
+              <a href={`tel:${COMPANY.phoneRaw}`} className="primary">Call to Apply <ArrowRight size={18} /></a>
+            )}
+            {formReady ? (
+              <a href={`tel:${COMPANY.phoneRaw}`} className="secondary">Call {COMPANY.phone}</a>
+            ) : (
+              <a href={`mailto:${COMPANY.email}`} className="secondary">Email Us</a>
+            )}
           </div>
 
           <p className="trust">
@@ -435,9 +443,10 @@ const GOOGLE_FORM_URL = 'https://forms.gle/REPLACE_WITH_YOUR_FORM_ID'
 // ---------------------------------------------------------------------------
 const GOOGLE_FORM_EMBED_URL = 'https://docs.google.com/forms/d/e/REPLACE_WITH_YOUR_FORM_ID/viewform?embedded=true'
 
+// Module-level flag — true once both GOOGLE_FORM_URL constants above are updated with real values
+const formReady = !GOOGLE_FORM_URL.includes('REPLACE_WITH_YOUR_FORM_ID')
+
 function Application() {
-  // Show a helpful placeholder UI until the owner fills in the real form URL
-  const formReady = !GOOGLE_FORM_URL.includes('REPLACE_WITH_YOUR_FORM_ID')
 
   return (
     <section id="apply" className="section dark">
@@ -457,11 +466,14 @@ function Application() {
 
         {/* Left column: info + truck image */}
         <div>
-          <p className="badge">Apply Online</p>
+          <p className="badge">{formReady ? 'Apply Online' : 'Contact to Apply'}</p>
           <h2>Owner-Operator Application</h2>
           <p className="leadSmall">
             Gud Express accepts <strong>semi trucks</strong>, box trucks, and other qualified
-            commercial vehicles. Fill in the application to join our MC authority program.
+            commercial vehicles.{' '}
+            {formReady
+              ? 'Fill in the application to join our MC authority program.'
+              : 'Call or email us to start your owner-operator application today.'}
           </p>
 
           {/* SEMI TRUCK IMAGE — application section visual (semi-truck.png) */}
@@ -476,7 +488,8 @@ function Application() {
             </figcaption>
           </figure>
 
-          {/* Document collection notice */}
+          {/* Document collection notice — only shown when the Google Form is active */}
+          {formReady && (
           <div className="gudProvidedNotice">
             <ShieldCheck size={22} aria-hidden="true" />
             <div>
@@ -489,6 +502,7 @@ function Application() {
               </p>
             </div>
           </div>
+          )}
 
           <div className="contactCard">
             <p><Phone size={18} /> <a href={`tel:${COMPANY.phoneRaw}`}>{COMPANY.phone}</a></p>
@@ -562,12 +576,14 @@ function Application() {
         </div>
       </div>
 
+      {formReady && (
       <div className="container">
         <p className="smallNote applyNote">
           Your information and any uploaded documents are handled securely through Google Forms
           and stored in a private Google Drive folder accessible only to GUD Express management.
         </p>
       </div>
+      )}
     </section>
   )
 }
@@ -580,10 +596,10 @@ function Contact() {
     <section className="section">
       <div className="container contact">
         <h2>Ready to Get Started?</h2>
-        <p>Apply online, call, or email GUD Express today.</p>
+        <p>{formReady ? 'Apply online, call, or email GUD Express today.' : 'Call or email GUD Express to start your application today.'}</p>
         <div className="heroActions center">
-          <a href="#apply" className="primary">Apply Now</a>
-          <a href={`tel:${COMPANY.phoneRaw}`} className="secondary">Call {COMPANY.phone}</a>
+          {formReady && <a href="#apply" className="primary">Apply Now</a>}
+          <a href={`tel:${COMPANY.phoneRaw}`} className={formReady ? 'secondary' : 'primary'}>Call {COMPANY.phone}</a>
           <a href={`mailto:${COMPANY.email}`} className="secondary">Email Us</a>
         </div>
       </div>
