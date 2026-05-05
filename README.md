@@ -276,6 +276,62 @@ the "Open Form in New Tab" link.
 
 ---
 
+## Box Truck Application
+
+The site includes a **dedicated Box Truck Application section** (below the unified application)
+specifically for box truck owner-operators. This restores the original box truck application
+experience and is kept clearly separate from the semi truck / unified application.
+
+### Box truck form fields (recommended)
+
+When building the Box Truck Google Form, include these fields:
+
+- **Full Name** (short answer)
+- **Phone** (short answer)
+- **Email** (short answer)
+- **City / State** (short answer)
+- **Box Truck Size** (dropdown: 16 ft / 20 ft / 22 ft / 24 ft / 26 ft)
+- **Years of Driving Experience** (short answer)
+- **Ready to Start** (dropdown: Immediately / This week / This month / Later)
+- **File upload: Driver License**
+- **File upload: Voided Check / Direct Deposit Info**
+- **Message / notes** (paragraph)
+
+### How to activate the box truck form
+
+1. Go to [forms.new](https://forms.new) and build a box-truck-specific application form using
+   the fields listed above.
+2. Click **Send** → **link icon (🔗)** → copy the URL.
+   Open `src/main.jsx`, find `BOX_TRUCK_FORM_URL`, and replace the placeholder:
+   ```js
+   const BOX_TRUCK_FORM_URL = 'https://forms.gle/YOUR_BOX_TRUCK_FORM_ID'
+   ```
+3. For the in-page embed: click **Send** → **Embed (< >)** → copy the `src="…"` URL.
+   In `src/main.jsx`, find `BOX_TRUCK_FORM_EMBED_URL` and replace the placeholder:
+   ```js
+   const BOX_TRUCK_FORM_EMBED_URL = 'https://docs.google.com/forms/d/e/YOUR_LONG_ID/viewform?embedded=true'
+   ```
+4. Rebuild and redeploy: `npm run build`
+
+### How to disable the box truck application section
+
+Set `BOX_TRUCK_FORM_URL` to an empty string in `src/main.jsx`:
+
+```js
+const BOX_TRUCK_FORM_URL = ''
+```
+
+The section will remain visible but will display a contact-us placeholder instead of a live
+form, so box truck applicants can still reach you by phone or email. If you want to hide the
+section entirely, remove `<BoxTruckApplication />` from the `App` function in `src/main.jsx`.
+
+### How to re-enable the box truck application section
+
+Paste your real Box Truck Google Form URL back into `BOX_TRUCK_FORM_URL` and `BOX_TRUCK_FORM_EMBED_URL`
+in `src/main.jsx`, then rebuild: `npm run build`
+
+---
+
 ## Important Note — Document Collection
 
 Driver license and direct deposit documents are collected securely via the Google Form's
@@ -292,8 +348,8 @@ Key image files in `src/assets/`:
 
 | File | Replace with |
 |---|---|
-| `src/assets/semi-truck.png` | **Semi truck application image** — featured in the application section to show semi trucks are accepted. Replace with any high-quality landscape PNG of your semi truck. |
-| `src/assets/truck.png` | Gud Express branded truck photo used in the hero section |
+| `src/assets/semi-truck.png` | **Semi truck application image** — featured in the unified application section. Replace with any high-quality landscape PNG of your semi truck. |
+| `src/assets/truck.png` | **Box truck application image** — featured in the Box Truck Application section and the hero. Replace with a high-quality photo of your box truck. |
 | `src/assets/team.png` | Real team or operations photo |
 | `src/assets/team-ops1.jpg` | Dispatcher coordinating routes at a workstation |
 | `src/assets/team-ops2.jpg` | Team collaborating in an operations center |
