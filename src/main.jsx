@@ -601,11 +601,11 @@ function Application() {
           <div className="gudProvidedNotice">
             <ShieldCheck size={22} />
             <div>
-              <strong>Important: Gud Express provides Insurance, W-9, and Truck Registration</strong>
+              <strong>Important: GUD Express provides Insurance, W-9, and Truck Registration</strong>
               <p>
                 Do <strong>not</strong> provide your own insurance, W-9, or truck registration.
-                All drivers must use Gud Express insurance, the Gud Express W-9, and be registered
-                under Gud Express. These will be handled on your behalf.
+                All drivers must use GUD Express insurance, the GUD Express W-9, and be registered
+                under GUD Express. These will be handled on your behalf.
               </p>
             </div>
           </div>
