@@ -460,6 +460,30 @@ textarea {
   font-size: 14px;
 }
 
+/* ─── Semi Truck Banner (Application section) ───────────────────────────── */
+.semiTruckBanner {
+  margin: 24px 0 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(37, 99, 235, 0.35);
+}
+
+.semiTruckBanner img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.semiTruckBanner figcaption {
+  background: rgba(15, 23, 42, 0.85);
+  color: #94a3b8;
+  font-size: 12px;
+  text-align: center;
+  padding: 8px 12px;
+  letter-spacing: 0.02em;
+}
+
 /* ─── Application Form ────────────────────────────────────────────────── */
 .form {
   display: grid;

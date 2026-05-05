@@ -26,6 +26,7 @@ import gudLogo from './assets/gud-logo.png'
 // ---------------------------------------------------------------------------
 import truckImg from './assets/truck.png'
 import teamImg from './assets/team.png'
+import semiTruckImg from './assets/semi-truck.png'
 
 // ---------------------------------------------------------------------------
 // TEAM & TECHNOLOGY IMAGES
@@ -551,6 +552,17 @@ function Application() {
             <p><Phone size={18} /> <a href={`tel:${COMPANY.phoneRaw}`}>{COMPANY.phone}</a></p>
             <p><Mail size={18} /> <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a></p>
           </div>
+
+          <figure className="semiTruckBanner">
+            <img
+              src={semiTruckImg}
+              alt={`GUD Express semi truck on the road — MC Authority #${COMPANY.mc}`}
+              loading="lazy"
+            />
+            <figcaption>
+              GUD Express LLC &mdash; Operating under MC #{COMPANY.mc}
+            </figcaption>
+          </figure>
         </div>
 
         <form className="form" onSubmit={handleSubmit}>
