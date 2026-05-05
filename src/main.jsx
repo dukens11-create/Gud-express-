@@ -133,6 +133,7 @@ function App() {
       <Pricing />
       <Requirements />
       <Application />
+      <BoxTruckApplication />
       <Contact />
       <Footer />
     </div>
@@ -161,6 +162,7 @@ function Header() {
         <nav className="desktopNav">
           <a href="#services">Services</a>
           <a href="#apply">Apply</a>
+          <a href="#apply-box-truck">Box Truck Apply</a>
           <a href={`tel:${COMPANY.phoneRaw}`} className="callBtn">Call Now</a>
         </nav>
 
@@ -180,6 +182,7 @@ function Header() {
         <div className="mobileMenu">
           <a href="#services" onClick={() => setMenuOpen(false)}>Services</a>
           <a href="#apply" onClick={() => setMenuOpen(false)}>Apply Now</a>
+          <a href="#apply-box-truck" onClick={() => setMenuOpen(false)}>Box Truck Apply</a>
           <a href={`tel:${COMPANY.phoneRaw}`} className="callBtn" onClick={() => setMenuOpen(false)}>
             Call Now
           </a>
@@ -428,7 +431,7 @@ function Requirements() {
 // ============================================================
 
 // ---------------------------------------------------------------------------
-// GOOGLE FORM LINK
+// GOOGLE FORM LINK (Unified / Semi Truck Application)
 // Replace the placeholder with the share URL from your Google Form.
 // How to get it: open your Google Form → Send → link (🔗) → Copy link
 // Example: 'https://forms.gle/YOUR_FORM_ID_HERE'
@@ -436,7 +439,7 @@ function Requirements() {
 const GOOGLE_FORM_URL = 'https://forms.gle/REPLACE_WITH_YOUR_FORM_ID'
 
 // ---------------------------------------------------------------------------
-// GOOGLE FORM EMBED URL (for the in-page iframe)
+// GOOGLE FORM EMBED URL (for the in-page iframe — Unified / Semi Truck Application)
 // Replace with the src= URL from your Google Form's embed dialog.
 // How to get it: open your Google Form → Send → Embed (< >) → copy src="…"
 // Example: 'https://docs.google.com/forms/d/e/YOUR_LONG_ID/viewform?embedded=true'
@@ -445,6 +448,29 @@ const GOOGLE_FORM_EMBED_URL = 'https://docs.google.com/forms/d/e/REPLACE_WITH_YO
 
 // Module-level flag — true once both GOOGLE_FORM_URL constants above are updated with real values
 const formReady = !GOOGLE_FORM_URL.includes('REPLACE_WITH_YOUR_FORM_ID')
+
+// ---------------------------------------------------------------------------
+// BOX TRUCK APPLICATION — Google Form Link
+// Replace the placeholder with the share URL from your Box Truck Google Form.
+// This is separate from the unified form above so box truck applicants have
+// their own dedicated form with box truck-specific questions.
+// How to get it: open your Box Truck Google Form → Send → link (🔗) → Copy link
+// Example: 'https://forms.gle/YOUR_BOX_TRUCK_FORM_ID'
+// To DISABLE the Box Truck Application section: set BOX_TRUCK_FORM_URL to ''
+// To ENABLE it: paste your real form URL below.
+// ---------------------------------------------------------------------------
+const BOX_TRUCK_FORM_URL = 'https://forms.gle/REPLACE_WITH_BOX_TRUCK_FORM_ID'
+
+// ---------------------------------------------------------------------------
+// BOX TRUCK APPLICATION — Google Form Embed URL
+// Replace with the src= URL from your Box Truck Google Form's embed dialog.
+// How to get it: open your Box Truck Google Form → Send → Embed (< >) → copy src="…"
+// Example: 'https://docs.google.com/forms/d/e/YOUR_LONG_ID/viewform?embedded=true'
+// ---------------------------------------------------------------------------
+const BOX_TRUCK_FORM_EMBED_URL = 'https://docs.google.com/forms/d/e/REPLACE_WITH_BOX_TRUCK_FORM_ID/viewform?embedded=true'
+
+// Module-level flag — true once both BOX_TRUCK_FORM_URL constants above are updated with real values
+const boxTruckFormReady = !BOX_TRUCK_FORM_URL.includes('REPLACE_WITH_BOX_TRUCK_FORM_ID') && BOX_TRUCK_FORM_URL !== ''
 
 function Application() {
 
@@ -583,6 +609,177 @@ function Application() {
           and stored in a private Google Drive folder accessible only to GUD Express management.
         </p>
       </div>
+      )}
+    </section>
+  )
+}
+
+// ============================================================
+// BoxTruckApplication — Dedicated application section for box truck owner-operators
+//
+// This section restores the original box truck application experience, separate
+// from the unified semi truck / multi-vehicle application above. Box truck
+// applicants see familiar fields: truck size (16–26 ft), driver license, and
+// direct deposit info.
+//
+// HOW TO UPDATE THE BOX TRUCK GOOGLE FORM LINK (owner/manager instructions):
+//   1. Go to https://forms.new and build a box-truck-specific form. Include:
+//        • Full Name, Phone, Email, City/State
+//        • Box Truck Size (16 ft / 20 ft / 22 ft / 24 ft / 26 ft)
+//        • Years of driving experience
+//        • Ready to start (Immediately / This week / This month / Later)
+//        • File upload: Driver License
+//        • File upload: Voided Check / Direct Deposit Info
+//        • Message / notes field
+//   2. Click "Send" → link icon (🔗) → copy the URL.
+//      Paste it as BOX_TRUCK_FORM_URL in src/main.jsx (see constants above).
+//   3. For the in-page embed: click "Send" → Embed (< >) → copy the src= URL.
+//      Paste it as BOX_TRUCK_FORM_EMBED_URL in src/main.jsx.
+//   4. Save, rebuild and redeploy: npm run build
+//   See README → "Box Truck Application" for full details.
+// ============================================================
+function BoxTruckApplication() {
+  return (
+    <section id="apply-box-truck" className="section boxTruckSection">
+
+      {/* ── Box truck dedicated banner ── */}
+      <div className="boxTruckBanner">
+        <Truck size={28} aria-hidden="true" />
+        <p>
+          <strong>Box Truck Application</strong>{' '}
+          Dedicated application for box truck owner-operators (16 ft – 26 ft).
+          Work under Gud Express MC Authority #{COMPANY.mc}.
+        </p>
+      </div>
+
+      <div className="container appGrid">
+
+        {/* Left column: info + truck image */}
+        <div>
+          <p className="badge boxTruckBadge">
+            {boxTruckFormReady ? 'Apply Online — Box Trucks' : 'Box Trucks — Contact to Apply'}
+          </p>
+          <h2>Box Truck Owner-Operator Application</h2>
+          <p className="leadSmall">
+            This application is specifically for <strong>box truck</strong> owner-operators
+            (16 ft, 20 ft, 22 ft, 24 ft, and 26 ft box trucks).{' '}
+            {boxTruckFormReady
+              ? 'Complete the form below to join the Gud Express MC authority program.'
+              : 'Call or email us to start your box truck owner-operator application today.'}
+          </p>
+
+          {/* Box sizes list */}
+          <div className="boxSizeList">
+            <p><strong>Accepted Box Truck Sizes:</strong></p>
+            <ul>
+              <li>16 ft Box Truck</li>
+              <li>20 ft Box Truck</li>
+              <li>22 ft Box Truck</li>
+              <li>24 ft Box Truck</li>
+              <li>26 ft Box Truck</li>
+            </ul>
+          </div>
+
+          {/* Box truck image */}
+          <figure className="applyTruckFigure">
+            <img
+              src={truckImg}
+              alt="Gud Express branded box truck for owner-operator application"
+              className="boxTruckImg"
+            />
+            <figcaption className="boxTruckCaption">
+              Box Trucks Welcome — Gud Express MC Authority #{COMPANY.mc}
+            </figcaption>
+          </figure>
+
+          {/* Document upload notice — only shown when form is active */}
+          {boxTruckFormReady && (
+            <div className="gudProvidedNotice">
+              <ShieldCheck size={22} aria-hidden="true" />
+              <div>
+                <strong>Secure Document Upload via Google Form</strong>
+                <p>
+                  Your <strong>driver license</strong> and voided check / direct deposit info
+                  are collected securely through the Google Form on this page. Files go directly
+                  to a private Gud Express Google Drive folder.
+                </p>
+              </div>
+            </div>
+          )}
+
+          <div className="contactCard">
+            <p><Phone size={18} /> <a href={`tel:${COMPANY.phoneRaw}`}>{COMPANY.phone}</a></p>
+            <p><Mail size={18} /> <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a></p>
+          </div>
+        </div>
+
+        {/* Right column: Google Form embed or placeholder */}
+        <div className="googleFormSide">
+          {boxTruckFormReady ? (
+            <>
+              <iframe
+                src={BOX_TRUCK_FORM_EMBED_URL}
+                title="GUD Express Box Truck Owner-Operator Application"
+                className="googleFormFrame"
+                frameBorder="0"
+                marginHeight="0"
+                marginWidth="0"
+                loading="lazy"
+              >
+                Loading form…
+              </iframe>
+              <a
+                href={BOX_TRUCK_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="secondary googleFormOpenLink"
+              >
+                <ExternalLink size={16} /> Open Box Truck Form in New Tab
+              </a>
+            </>
+          ) : (
+            /* ── Direct-apply state ─────────────────────────────────────
+               Shown until the owner sets BOX_TRUCK_FORM_URL above.
+               OWNER: follow the instructions at the top of this section
+               to create your Box Truck Google Form and paste the link above.
+               See README → "Box Truck Application" for step-by-step help.
+            ─────────────────────────────────────────────────────────── */
+            <div className="googleFormPlaceholder boxTruckPlaceholder">
+              <ClipboardList size={52} aria-hidden="true" />
+              <h3>Box Truck Application — Contact Us Directly</h3>
+              <p className="leadSmall">
+                Ready to haul with your box truck? Call or email us to begin your application.
+                We accept 16 ft, 20 ft, 22 ft, 24 ft, and 26 ft box trucks under our MC authority.
+              </p>
+              <div className="applyDocList">
+                <p><strong>Have these documents ready:</strong></p>
+                <ul>
+                  <li>Valid driver's license</li>
+                  <li>Box truck size and vehicle information</li>
+                  <li>Voided check or direct deposit info</li>
+                  <li>Years of driving experience</li>
+                </ul>
+              </div>
+              <div className="heroActions">
+                <a href={`tel:${COMPANY.phoneRaw}`} className="primary">
+                  <Phone size={18} /> Call {COMPANY.phone}
+                </a>
+                <a href={`mailto:${COMPANY.email}`} className="secondary">
+                  <Mail size={18} /> Email Us
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {boxTruckFormReady && (
+        <div className="container">
+          <p className="smallNote applyNote">
+            Your information and uploaded documents are handled securely through Google Forms
+            and stored in a private Google Drive folder accessible only to GUD Express management.
+          </p>
+        </div>
       )}
     </section>
   )

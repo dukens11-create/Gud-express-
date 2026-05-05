@@ -599,6 +599,117 @@ textarea {
   margin-top: 24px;
 }
 
+/* ─── Box Truck Application Section ──────────────────────────────────────── */
+
+/* Outer section — uses a distinct blue tint to differentiate from semi truck section */
+.boxTruckSection {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.18) 0%, rgba(2, 6, 23, 0) 60%);
+  border-top: 2px solid rgba(96, 165, 250, 0.25);
+}
+
+/* Banner across the top of the box truck section */
+.boxTruckBanner {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(96, 165, 250, 0.12);
+  border-top: 1px solid rgba(96, 165, 250, 0.3);
+  border-bottom: 1px solid rgba(96, 165, 250, 0.3);
+  padding: 14px 20px;
+  color: #dbeafe;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.boxTruckBanner svg {
+  flex-shrink: 0;
+  color: #60a5fa;
+}
+
+.boxTruckBanner p {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+.boxTruckBanner strong {
+  color: #93c5fd;
+}
+
+/* Badge pill override for box truck section */
+.boxTruckBadge {
+  background: rgba(96, 165, 250, 0.15) !important;
+  color: #93c5fd !important;
+  border: 1px solid rgba(96, 165, 250, 0.35) !important;
+}
+
+/* Box truck size list */
+.boxSizeList {
+  background: rgba(96, 165, 250, 0.07);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+
+.boxSizeList p {
+  margin: 0 0 8px;
+  color: #93c5fd;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.boxSizeList ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #e2e8f0;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* Box truck image */
+.boxTruckImg {
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: contain;
+  border-radius: 16px;
+  display: block;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(96, 165, 250, 0.4);
+  box-shadow: 0 4px 24px rgba(96, 165, 250, 0.15);
+  padding: 8px;
+}
+
+/* Caption below the box truck image */
+.boxTruckCaption {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #93c5fd;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* Placeholder card override for box truck section */
+.boxTruckPlaceholder {
+  border-color: rgba(96, 165, 250, 0.35) !important;
+  background: rgba(96, 165, 250, 0.06) !important;
+  color: #dbeafe !important;
+}
+
+.boxTruckPlaceholder svg {
+  color: #60a5fa !important;
+}
+
+@media (max-width: 580px) {
+  .boxTruckBanner {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+}
+
 .smallNote {
   font-size: 13px;
   color: #94a3b8;
