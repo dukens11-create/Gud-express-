@@ -11,8 +11,8 @@ import React, { useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   ShieldCheck, ClipboardList, DollarSign, Phone, Mail,
-  CheckCircle, FileText, ArrowRight,
-  Menu, X, ExternalLink, Truck
+  CheckCircle, UploadCloud, Send, FileText, ArrowRight,
+  Menu, X, Loader2
 } from 'lucide-react'
 import './styles.css'
 
@@ -23,10 +23,8 @@ import gudLogo from './assets/gud-logo.png'
 
 // ---------------------------------------------------------------------------
 // IMAGES: Replace truck.png and team.png in src/assets/ with your own photos.
-// For the application section semi truck visual, semi-truck.png is used.
 // ---------------------------------------------------------------------------
 import truckImg from './assets/truck.png'
-import semiTruckImg from './assets/semi-truck.png'
 import teamImg from './assets/team.png'
 
 // ---------------------------------------------------------------------------
@@ -57,7 +55,7 @@ const COMPANY = {
 
 // Services offered — update text or add/remove entries as needed
 const services = [
-  ['Work Under Our MC', 'Semi trucks and box truck owner-operators can work under GUD Express MC authority.', ShieldCheck],
+  ['Work Under Our MC', 'Box truck owner-operators can work under GUD Express MC authority.', ShieldCheck],
   ['Dispatch Service', 'We help find, negotiate, and book loads for qualified owner-operators.', ClipboardList],
   ['Factoring Support', 'We help coordinate factoring paperwork and faster payment support.', DollarSign],
   ['Payment Support', 'We assist with rate confirmations, paperwork, invoices, and weekly settlements.', FileText],
@@ -68,7 +66,7 @@ const services = [
 // Do NOT ask applicants to provide their own versions of those documents.
 const requirements = [
   'Valid driver license',
-  'Truck information (Semi, Box Truck 16–26 ft, or other qualified vehicle)',
+  'Box truck information',
   'Direct deposit or voided check',
   'Driving experience information',
 ]
@@ -133,7 +131,6 @@ function App() {
       <Pricing />
       <Requirements />
       <Application />
-      <BoxTruckApplication />
       <Contact />
       <Footer />
     </div>
@@ -162,7 +159,6 @@ function Header() {
         <nav className="desktopNav">
           <a href="#services">Services</a>
           <a href="#apply">Apply</a>
-          <a href="#apply-box-truck">Box Truck Apply</a>
           <a href={`tel:${COMPANY.phoneRaw}`} className="callBtn">Call Now</a>
         </nav>
 
@@ -182,7 +178,6 @@ function Header() {
         <div className="mobileMenu">
           <a href="#services" onClick={() => setMenuOpen(false)}>Services</a>
           <a href="#apply" onClick={() => setMenuOpen(false)}>Apply Now</a>
-          <a href="#apply-box-truck" onClick={() => setMenuOpen(false)}>Box Truck Apply</a>
           <a href={`tel:${COMPANY.phoneRaw}`} className="callBtn" onClick={() => setMenuOpen(false)}>
             Call Now
           </a>
@@ -200,24 +195,16 @@ function Hero() {
     <section id="home" className="hero">
       <div className="container heroGrid">
         <div>
-          <p className="badge">Semi Truck &amp; Box Truck Owner-Operators Wanted</p>
+          <p className="badge">Box Truck Owner-Operators Wanted</p>
           <h1>Drive Under <span>GUD Express</span> MC Authority</h1>
           <p className="lead">
-            GUD Express accepts semi trucks and box truck owner-operators to work under our MC
+            GUD Express accepts box truck owner-operators to work under our MC
             authority with dispatch service, factoring support, and payment coordination.
           </p>
 
           <div className="heroActions">
-            {formReady ? (
-              <a href="#apply" className="primary">Start Application <ArrowRight size={18} /></a>
-            ) : (
-              <a href={`tel:${COMPANY.phoneRaw}`} className="primary">Call to Apply <ArrowRight size={18} /></a>
-            )}
-            {formReady ? (
-              <a href={`tel:${COMPANY.phoneRaw}`} className="secondary">Call {COMPANY.phone}</a>
-            ) : (
-              <a href={`mailto:${COMPANY.email}`} className="secondary">Email Us</a>
-            )}
+            <a href="#apply" className="primary">Start Application <ArrowRight size={18} /></a>
+            <a href={`tel:${COMPANY.phoneRaw}`} className="secondary">Call {COMPANY.phone}</a>
           </div>
 
           <p className="trust">
@@ -247,7 +234,7 @@ function Services() {
       <div className="container">
         <div className="sectionHead">
           <h2>What We Provide</h2>
-          <p>Simple support for serious semi truck and box truck owner-operators.</p>
+          <p>Simple support for serious box truck owner-operators.</p>
         </div>
 
         <div className="cards">
@@ -405,307 +392,160 @@ function Requirements() {
 }
 
 // ============================================================
-// Application — Google Form section
+// Application — owner-operator application form
+// Submissions are sent to gudexpressllc@gmail.com via Formspree.
 //
-// WHY GOOGLE FORMS INSTEAD OF FORMSPREE:
-//   Formspree's free plan does not support file uploads. Drivers need to
-//   securely submit documents such as their driver license. Google Forms
-//   handles file uploads natively and stores them in Google Drive at no cost.
-//   All form responses (text + uploaded files) are accessible in one place.
-//
-// HOW TO UPDATE THE GOOGLE FORM LINK (owner/manager instructions):
-//   1. Go to https://forms.new and build your application form. Include:
-//        • Full Name, Phone, Email, City/State
-//        • Truck Type: Semi, Box Truck 16 ft, 20 ft, 22 ft, 24 ft, 26 ft, Hotshot, Other
-//        • Years of experience
-//        • Ready to start (Immediately / This week / This month / Later)
-//        • File upload: Driver License  ← enables secure document collection
-//        • File upload: Voided Check / Direct Deposit Info
-//        • Message / notes field
-//   2. Click "Send" → link icon (🔗) → copy the URL.
-//      Paste it as the value of GOOGLE_FORM_URL below.
-//   3. For the in-page embed: click "Send" → Embed (< >) → copy the src= URL.
-//      Paste it as GOOGLE_FORM_EMBED_URL below.
-//   4. Save src/main.jsx, then rebuild and redeploy: npm run build
-//   See README → "Google Form Integration" for full details and best practices.
+// HOW TO UPDATE THE FORMSPREE ENDPOINT IN THE FUTURE:
+//   1. Sign up / log in at https://formspree.io
+//   2. Create a new form — set recipient to gudexpressllc@gmail.com
+//   3. Copy the new Form ID (e.g. xabcdefg) from your Formspree dashboard
+//   4. Replace the form ID in the FORMSPREE_ENDPOINT constant below:
+//        const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xabcdefg'
+//   5. Rebuild and redeploy: npm run build
+// See README → "Formspree Integration" for full details.
 // ============================================================
 
 // ---------------------------------------------------------------------------
-// GOOGLE FORM LINK (Unified / Semi Truck Application)
-// Replace the placeholder with the share URL from your Google Form.
-// How to get it: open your Google Form → Send → link (🔗) → Copy link
-// Example: 'https://forms.gle/YOUR_FORM_ID_HERE'
+// FORMSPREE ENDPOINT — active; submissions go to gudexpressllc@gmail.com
+// Form ID: xgodojkw
+// To change the endpoint: update the form ID (part after /f/) and redeploy.
+//
+// NOTE: The form ID is intentionally public (Formspree is a front-end service).
+// Spam protection: a hidden _gotcha honeypot field is included in the form.
+// For extra protection, enable reCAPTCHA in your Formspree dashboard under
+// Settings → Spam Filtering.
 // ---------------------------------------------------------------------------
-const GOOGLE_FORM_URL = 'https://forms.gle/REPLACE_WITH_YOUR_FORM_ID'
-
-// ---------------------------------------------------------------------------
-// GOOGLE FORM EMBED URL (for the in-page iframe — Unified / Semi Truck Application)
-// Replace with the src= URL from your Google Form's embed dialog.
-// How to get it: open your Google Form → Send → Embed (< >) → copy src="…"
-// Example: 'https://docs.google.com/forms/d/e/YOUR_LONG_ID/viewform?embedded=true'
-// ---------------------------------------------------------------------------
-const GOOGLE_FORM_EMBED_URL = 'https://docs.google.com/forms/d/e/REPLACE_WITH_YOUR_FORM_ID/viewform?embedded=true'
-
-// Module-level flag — true once both GOOGLE_FORM_URL constants above are updated with real values
-const formReady = !GOOGLE_FORM_URL.includes('REPLACE_WITH_YOUR_FORM_ID')
-
-// ---------------------------------------------------------------------------
-// BOX TRUCK APPLICATION — Google Form Link
-// Replace the placeholder with the share URL from your Box Truck Google Form.
-// This is separate from the unified form above so box truck applicants have
-// their own dedicated form with box truck-specific questions.
-// How to get it: open your Box Truck Google Form → Send → link (🔗) → Copy link
-// Example: 'https://forms.gle/YOUR_BOX_TRUCK_FORM_ID'
-// To DISABLE the Box Truck Application section: set BOX_TRUCK_FORM_URL to ''
-// To ENABLE it: paste your real form URL below.
-// ---------------------------------------------------------------------------
-const BOX_TRUCK_FORM_URL = 'https://forms.gle/REPLACE_WITH_BOX_TRUCK_FORM_ID'
-
-// ---------------------------------------------------------------------------
-// BOX TRUCK APPLICATION — Google Form Embed URL
-// Replace with the src= URL from your Box Truck Google Form's embed dialog.
-// How to get it: open your Box Truck Google Form → Send → Embed (< >) → copy src="…"
-// Example: 'https://docs.google.com/forms/d/e/YOUR_LONG_ID/viewform?embedded=true'
-// ---------------------------------------------------------------------------
-const BOX_TRUCK_FORM_EMBED_URL = 'https://docs.google.com/forms/d/e/REPLACE_WITH_BOX_TRUCK_FORM_ID/viewform?embedded=true'
-
-// Module-level flag — true once both BOX_TRUCK_FORM_URL constants above are updated with real values
-const boxTruckFormReady = !BOX_TRUCK_FORM_URL.includes('REPLACE_WITH_BOX_TRUCK_FORM_ID') && BOX_TRUCK_FORM_URL !== ''
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgodojkw'
 
 function Application() {
+  const [status, setStatus] = useState('idle') // 'idle' | 'submitting' | 'success' | 'error'
+
+  // Warn developers if the Formspree endpoint looks like a placeholder
+  useEffect(() => {
+    if (!FORMSPREE_ENDPOINT.match(/^https:\/\/formspree\.io\/f\/[a-zA-Z0-9]+$/)) {
+      console.warn(
+        '[GUD Express] FORMSPREE_ENDPOINT does not look like a valid Formspree URL. ' +
+        'Update the FORMSPREE_ENDPOINT constant in src/main.jsx with your real form ID ' +
+        'so applications are delivered to gudexpressllc@gmail.com.'
+      )
+    }
+  }, [])
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setStatus('submitting')
+
+    // ---------------------------------------------------------------------------
+    // FORMSPREE POST — sends form fields to gudexpressllc@gmail.com
+    // Formspree returns JSON when the Accept header is set to application/json.
+    // On failure the JSON body contains an `errors` array with details.
+    //
+    // HOW THIS HANDLER WORKS (do not change without reading these notes):
+    //   1. We create a FormData object from the form element — this captures all
+    //      named input, select, and textarea values automatically.
+    //   2. We append '_gotcha' with an empty string. Formspree uses this as a
+    //      honeypot: bots often fill it in, causing Formspree to reject the
+    //      submission as spam. Legitimate users never see or interact with it.
+    //   3. We do NOT manually set the Content-Type header. When body is FormData,
+    //      the browser sets Content-Type to multipart/form-data with the correct
+    //      boundary string. Setting it manually breaks the boundary and Formspree
+    //      will reject the request.
+    //   4. Accept: application/json tells Formspree to return structured JSON so
+    //      we can parse error messages for console debugging.
+    //   5. On success we call form.reset() to clear all fields before showing
+    //      the success screen. On error or network failure we show an error screen
+    //      with the company phone and email so the user can still reach us.
+    // ---------------------------------------------------------------------------
+    const form = e.target
+    const data = new FormData(form)
+    // Append honeypot for spam protection — must be empty for Formspree to accept
+    data.append('_gotcha', '')
+
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        body: data,
+        // Do NOT set Content-Type here — let the browser set multipart/form-data
+        // with the correct boundary automatically (required for FormData uploads).
+        headers: { Accept: 'application/json' },
+      })
+
+      if (res.ok) {
+        // Clear all form fields before switching to the success view
+        form.reset()
+        setStatus('success')
+      } else {
+        // Parse Formspree's JSON error body for console debugging
+        let detail = ''
+        try {
+          const json = await res.json()
+          detail = json.errors?.map(err => err.message).join('; ') ?? json.error ?? ''
+        } catch (parseError) {
+          console.error('[GUD Express] Could not parse Formspree error response:', parseError)
+        }
+        console.error('[GUD Express] Formspree submission failed:', res.status, detail)
+        setStatus('error')
+      }
+    } catch (err) {
+      // Network failure or CORS error
+      console.error('[GUD Express] Formspree network error:', err)
+      setStatus('error')
+    }
+  }
+
+  if (status === 'success') {
+    return (
+      <section id="apply" className="section dark">
+        <div className="container successBox">
+          <CheckCircle size={56} className="successIcon" />
+          <h2>Application Received!</h2>
+          <p>
+            Thank you for your interest in working with GUD Express. Our team will review your
+            application and reach out to you within 1–2 business days.
+          </p>
+          <p>
+            Questions? Call us at{' '}
+            <a href={`tel:${COMPANY.phoneRaw}`} className="inlineLink">{COMPANY.phone}</a>
+            {' '}or email{' '}
+            <a href={`mailto:${COMPANY.email}`} className="inlineLink">{COMPANY.email}</a>.
+          </p>
+          <button className="primary" onClick={() => setStatus('idle')}>
+            Submit Another Application
+          </button>
+        </div>
+      </section>
+    )
+  }
+
+  if (status === 'error') {
+    return (
+      <section id="apply" className="section dark">
+        <div className="container errorBox">
+          <Mail size={56} className="errorIcon" />
+          <h2>Submission Failed</h2>
+          <p>
+            We were unable to send your application at this time. Please try again, or contact us
+            directly and we will be happy to help.
+          </p>
+          <div className="heroActions center">
+            <button className="primary" onClick={() => setStatus('idle')}>Try Again</button>
+            <a href={`tel:${COMPANY.phoneRaw}`} className="secondary">Call {COMPANY.phone}</a>
+            <a href={`mailto:${COMPANY.email}`} className="secondary">Email Us</a>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="apply" className="section dark">
-
-      {/* ── Semi truck acceptance banner ── */}
-      {/* Update text below if the MC Authority Number or policy changes */}
-      <div className="semiTruckBanner">
-        <Truck size={28} aria-hidden="true" />
-        <p>
-          <strong>Semi Trucks Welcome!</strong>{' '}
-          We accept semi trucks to work under Gud Express MC Authority Number {COMPANY.mc}.
-          Apply with any qualified truck type.
-        </p>
-      </div>
-
       <div className="container appGrid">
-
-        {/* Left column: info + truck image */}
         <div>
-          <p className="badge">{formReady ? 'Apply Online' : 'Contact to Apply'}</p>
-          <h2>Owner-Operator Application</h2>
-          <p className="leadSmall">
-            Gud Express accepts <strong>semi trucks</strong>, box trucks, and other qualified
-            commercial vehicles.{' '}
-            {formReady
-              ? 'Fill in the application to join our MC authority program.'
-              : 'Call or email us to start your owner-operator application today.'}
-          </p>
-
-          {/* SEMI TRUCK IMAGE — application section visual (semi-truck.png) */}
-          <figure className="applyTruckFigure">
-            <img
-              src={semiTruckImg}
-              alt="Gud Express branded semi truck for MC Authority application"
-              className="applyTruckImg"
-            />
-            <figcaption className="applyTruckCaption">
-              Semi Trucks Accepted — Gud Express MC Authority #{COMPANY.mc}
-            </figcaption>
-          </figure>
-
-          {/* Document collection notice — only shown when the Google Form is active */}
-          {formReady && (
-          <div className="gudProvidedNotice">
-            <ShieldCheck size={22} aria-hidden="true" />
-            <div>
-              <strong>Secure Document Upload via Google Form</strong>
-              <p>
-                All required documents — including your <strong>driver license</strong> and
-                voided check / direct deposit info — are collected securely through the Google
-                Form on this page. No separate email needed. Files go directly to a private
-                GUD Express Google Drive folder.
-              </p>
-            </div>
-          </div>
-          )}
-
-          <div className="contactCard">
-            <p><Phone size={18} /> <a href={`tel:${COMPANY.phoneRaw}`}>{COMPANY.phone}</a></p>
-            <p><Mail size={18} /> <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a></p>
-          </div>
-        </div>
-
-        {/* Right column: Google Form embed or placeholder */}
-        <div className="googleFormSide">
-          {formReady ? (
-            <>
-              {/*
-                GOOGLE FORM IFRAME EMBED
-                Adjust the height (currently 900px) to match your form's actual length.
-                The src comes from GOOGLE_FORM_EMBED_URL defined above this component.
-              */}
-              <iframe
-                src={GOOGLE_FORM_EMBED_URL}
-                title="GUD Express Owner-Operator Application"
-                className="googleFormFrame"
-                frameBorder="0"
-                marginHeight="0"
-                marginWidth="0"
-                loading="lazy"
-              >
-                Loading form…
-              </iframe>
-              <a
-                href={GOOGLE_FORM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="secondary googleFormOpenLink"
-              >
-                <ExternalLink size={16} /> Open Form in New Tab
-              </a>
-            </>
-          ) : (
-            /* ── Direct-apply state ──────────────────────────────────────
-               Shown until the owner sets GOOGLE_FORM_URL above.
-               OWNER: follow the instructions at the top of this section
-               to create your Google Form and paste the link above.
-               See README → "Google Form Integration" for step-by-step help.
-            ─────────────────────────────────────────────────────────── */
-            <div className="googleFormPlaceholder">
-              <ClipboardList size={52} aria-hidden="true" />
-              <h3>Apply Now — Contact Us Directly</h3>
-              <p className="leadSmall">
-                Ready to get started? Call or email us to begin your owner-operator application.
-                We'll walk you through every step and get your documents submitted fast — semi
-                trucks, box trucks, and all qualified commercial vehicles welcome.
-              </p>
-              <div className="applyDocList">
-                <p><strong>Have these documents ready:</strong></p>
-                <ul>
-                  <li>Valid Commercial Driver's License (CDL)</li>
-                  <li>Proof of commercial auto insurance</li>
-                  <li>Voided check or direct deposit info</li>
-                  <li>Vehicle registration / title</li>
-                </ul>
-              </div>
-              <div className="heroActions">
-                <a href={`tel:${COMPANY.phoneRaw}`} className="primary">
-                  <Phone size={18} /> Call {COMPANY.phone}
-                </a>
-                <a href={`mailto:${COMPANY.email}`} className="secondary">
-                  <Mail size={18} /> Email Us
-                </a>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {formReady && (
-      <div className="container">
-        <p className="smallNote applyNote">
-          Your information and any uploaded documents are handled securely through Google Forms
-          and stored in a private Google Drive folder accessible only to GUD Express management.
-        </p>
-      </div>
-      )}
-    </section>
-  )
-}
-
-// ============================================================
-// BoxTruckApplication — Dedicated application section for box truck owner-operators
-//
-// This section restores the original box truck application experience, separate
-// from the unified semi truck / multi-vehicle application above. Box truck
-// applicants see familiar fields: truck size (16–26 ft), driver license, and
-// direct deposit info.
-//
-// HOW TO UPDATE THE BOX TRUCK GOOGLE FORM LINK (owner/manager instructions):
-//   1. Go to https://forms.new and build a box-truck-specific form. Include:
-//        • Full Name, Phone, Email, City/State
-//        • Box Truck Size (16 ft / 20 ft / 22 ft / 24 ft / 26 ft)
-//        • Years of driving experience
-//        • Ready to start (Immediately / This week / This month / Later)
-//        • File upload: Driver License
-//        • File upload: Voided Check / Direct Deposit Info
-//        • Message / notes field
-//   2. Click "Send" → link icon (🔗) → copy the URL.
-//      Paste it as BOX_TRUCK_FORM_URL in src/main.jsx (see constants above).
-//   3. For the in-page embed: click "Send" → Embed (< >) → copy the src= URL.
-//      Paste it as BOX_TRUCK_FORM_EMBED_URL in src/main.jsx.
-//   4. Save, rebuild and redeploy: npm run build
-//   See README → "Box Truck Application" for full details.
-// ============================================================
-function BoxTruckApplication() {
-  return (
-    <section id="apply-box-truck" className="section boxTruckSection">
-
-      {/* ── Box truck dedicated banner ── */}
-      <div className="boxTruckBanner">
-        <Truck size={28} aria-hidden="true" />
-        <p>
-          <strong>Box Truck Application</strong>{' '}
-          Dedicated application for box truck owner-operators (16 ft – 26 ft).
-          Work under Gud Express MC Authority #{COMPANY.mc}.
-        </p>
-      </div>
-
-      <div className="container appGrid">
-
-        {/* Left column: info + truck image */}
-        <div>
-          <p className="badge boxTruckBadge">
-            {boxTruckFormReady ? 'Apply Online — Box Trucks' : 'Box Trucks — Contact to Apply'}
-          </p>
+          <p className="badge">Apply Online</p>
           <h2>Box Truck Owner-Operator Application</h2>
           <p className="leadSmall">
-            This application is specifically for <strong>box truck</strong> owner-operators
-            (16 ft, 20 ft, 22 ft, 24 ft, and 26 ft box trucks).{' '}
-            {boxTruckFormReady
-              ? 'Complete the form below to join the Gud Express MC authority program.'
-              : 'Call or email us to start your box truck owner-operator application today.'}
+            Complete this application and GUD Express will contact you about the next steps.
           </p>
-
-          {/* Box sizes list */}
-          <div className="boxSizeList">
-            <p><strong>Accepted Box Truck Sizes:</strong></p>
-            <ul>
-              <li>16 ft Box Truck</li>
-              <li>20 ft Box Truck</li>
-              <li>22 ft Box Truck</li>
-              <li>24 ft Box Truck</li>
-              <li>26 ft Box Truck</li>
-            </ul>
-          </div>
-
-          {/* Box truck image */}
-          <figure className="applyTruckFigure">
-            <img
-              src={truckImg}
-              alt="Gud Express branded box truck for owner-operator application"
-              className="boxTruckImg"
-            />
-            <figcaption className="boxTruckCaption">
-              Box Trucks Welcome — Gud Express MC Authority #{COMPANY.mc}
-            </figcaption>
-          </figure>
-
-          {/* Document upload notice — only shown when form is active */}
-          {boxTruckFormReady && (
-            <div className="gudProvidedNotice">
-              <ShieldCheck size={22} aria-hidden="true" />
-              <div>
-                <strong>Secure Document Upload via Google Form</strong>
-                <p>
-                  Your <strong>driver license</strong> and voided check / direct deposit info
-                  are collected securely through the Google Form on this page. Files go directly
-                  to a private Gud Express Google Drive folder.
-                </p>
-              </div>
-            </div>
-          )}
 
           <div className="contactCard">
             <p><Phone size={18} /> <a href={`tel:${COMPANY.phoneRaw}`}>{COMPANY.phone}</a></p>
@@ -713,74 +553,101 @@ function BoxTruckApplication() {
           </div>
         </div>
 
-        {/* Right column: Google Form embed or placeholder */}
-        <div className="googleFormSide">
-          {boxTruckFormReady ? (
-            <>
-              <iframe
-                src={BOX_TRUCK_FORM_EMBED_URL}
-                title="GUD Express Box Truck Owner-Operator Application"
-                className="googleFormFrame"
-                frameBorder="0"
-                marginHeight="0"
-                marginWidth="0"
-                loading="lazy"
-              >
-                Loading form…
-              </iframe>
-              <a
-                href={BOX_TRUCK_FORM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="secondary googleFormOpenLink"
-              >
-                <ExternalLink size={16} /> Open Box Truck Form in New Tab
-              </a>
-            </>
-          ) : (
-            /* ── Direct-apply state ─────────────────────────────────────
-               Shown until the owner sets BOX_TRUCK_FORM_URL above.
-               OWNER: follow the instructions at the top of this section
-               to create your Box Truck Google Form and paste the link above.
-               See README → "Box Truck Application" for step-by-step help.
-            ─────────────────────────────────────────────────────────── */
-            <div className="googleFormPlaceholder boxTruckPlaceholder">
-              <ClipboardList size={52} aria-hidden="true" />
-              <h3>Box Truck Application — Contact Us Directly</h3>
-              <p className="leadSmall">
-                Ready to haul with your box truck? Call or email us to begin your application.
-                We accept 16 ft, 20 ft, 22 ft, 24 ft, and 26 ft box trucks under our MC authority.
-              </p>
-              <div className="applyDocList">
-                <p><strong>Have these documents ready:</strong></p>
-                <ul>
-                  <li>Valid driver's license</li>
-                  <li>Box truck size and vehicle information</li>
-                  <li>Voided check or direct deposit info</li>
-                  <li>Years of driving experience</li>
-                </ul>
-              </div>
-              <div className="heroActions">
-                <a href={`tel:${COMPANY.phoneRaw}`} className="primary">
-                  <Phone size={18} /> Call {COMPANY.phone}
-                </a>
-                <a href={`mailto:${COMPANY.email}`} className="secondary">
-                  <Mail size={18} /> Email Us
-                </a>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+        <form className="form" onSubmit={handleSubmit}>
+          {/* Formspree spam-protection: honeypot field must stay hidden and empty */}
+          <input type="text" name="_gotcha" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
+          {/* Custom email subject shown in gudexpressllc@gmail.com inbox */}
+          <input type="hidden" name="_subject" value="New Owner-Operator Application — GUD Express" />
 
-      {boxTruckFormReady && (
-        <div className="container">
-          <p className="smallNote applyNote">
-            Your information and uploaded documents are handled securely through Google Forms
-            and stored in a private Google Drive folder accessible only to GUD Express management.
+          <div className="formRow">
+            {/* "name" is the Formspree-recognised sender field — do not rename */}
+            <label>Full Name<input required name="name" /></label>
+            <label>Phone Number<input required name="phone" /></label>
+          </div>
+
+          <div className="formRow">
+            <label>Email<input required type="email" name="email" /></label>
+            <label>City / State<input required name="location" /></label>
+          </div>
+
+          <div className="formRow">
+            <label>Truck Size
+              <select required name="truckSize">
+                <option value="">Select</option>
+                <option>16 ft box truck</option>
+                <option>20 ft box truck</option>
+                <option>22 ft box truck</option>
+                <option>24 ft box truck</option>
+                <option>26 ft box truck</option>
+                <option>Other</option>
+              </select>
+            </label>
+
+            <label>Years of Experience<input name="experience" /></label>
+          </div>
+
+          <div className="formRow">
+            <label>Ready to Start
+              <select name="startDate">
+                <option>Immediately</option>
+                <option>This week</option>
+                <option>This month</option>
+                <option>Later</option>
+              </select>
+            </label>
+          </div>
+
+          {/* Policy notice — displayed prominently before document uploads */}
+          <div className="gudProvidedNotice">
+            <ShieldCheck size={22} />
+            <div>
+              <strong>Important: GUD Express provides Insurance, W-9, and Truck Registration</strong>
+              <p>
+                Do <strong>not</strong> provide your own insurance, W-9, or truck registration.
+                All drivers must use GUD Express insurance, the GUD Express W-9, and be registered
+                under GUD Express. These will be handled on your behalf.
+              </p>
+            </div>
+          </div>
+
+          <h3>Upload Documents</h3>
+          <div className="uploads">
+            {[
+              ['Driver License', 'driverLicense'],
+              ['Voided Check / Direct Deposit', 'directDeposit'],
+            ].map(([doc, fieldName]) => (
+              <label className="upload" key={doc}>
+                <UploadCloud size={22} />
+                <span>{doc}</span>
+                <input type="file" name={fieldName} />
+              </label>
+            ))}
+          </div>
+
+          <label>
+            Message
+            <textarea
+              name="message"
+              placeholder="Tell us about your truck, availability, and driving experience."
+            />
+          </label>
+
+          <button className="primary full" type="submit" disabled={status === 'submitting'}>
+            {status === 'submitting'
+              ? <><Loader2 size={18} className="spin" /> Submitting&hellip;</>
+              : <><Send size={18} /> Submit Application</>
+            }
+          </button>
+
+          {/* FORMSPREE: This form posts to FORMSPREE_ENDPOINT (defined above the component).
+              To update the endpoint, change the form ID in the FORMSPREE_ENDPOINT constant.
+              See README → "Formspree Integration" for step-by-step setup instructions. */}
+          <p className="smallNote">
+            Your information is kept private and will only be used to contact you about the
+            GUD Express owner-operator program.
           </p>
-        </div>
-      )}
+        </form>
+      </div>
     </section>
   )
 }
@@ -793,10 +660,10 @@ function Contact() {
     <section className="section">
       <div className="container contact">
         <h2>Ready to Get Started?</h2>
-        <p>{formReady ? 'Apply online, call, or email GUD Express today.' : 'Call or email GUD Express to start your application today.'}</p>
+        <p>Apply online, call, or email GUD Express today.</p>
         <div className="heroActions center">
-          {formReady && <a href="#apply" className="primary">Apply Now</a>}
-          <a href={`tel:${COMPANY.phoneRaw}`} className={formReady ? 'secondary' : 'primary'}>Call {COMPANY.phone}</a>
+          <a href="#apply" className="primary">Apply Now</a>
+          <a href={`tel:${COMPANY.phoneRaw}`} className="secondary">Call {COMPANY.phone}</a>
           <a href={`mailto:${COMPANY.email}`} className="secondary">Email Us</a>
         </div>
       </div>
